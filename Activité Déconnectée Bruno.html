@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Formation IA - Température & Hallucination</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .progress-bar {
+        transition: width 15s linear;
+      }
+      .row-item {
+        animation: fadeIn 0.3s ease-out;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(5px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-slate-100 p-4 md:p-10 font-sans text-slate-800">
+    <div class="max-w-4xl mx-auto space-y-12">
+      <header class="text-center">
+        <h1 class="text-3xl font-bold text-indigo-900 leading-tight">Atelier IA : Prédiction vs Réalité</h1>
+        <p class="text-slate-500 mt-2">Outil interactif pour les formations de Bourgoin-Jallieu</p>
+      </header>
+
+      <section class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200">
+        <h2 class="text-2xl font-bold text-blue-700 mb-2">1. La Température (Mots)</h2>
+
+        <p class="text-slate-500 mb-6 italic">
+          « Trouvez le mot qui complète cette suite. Gardez en tête <span class="text-indigo-600 font-bold">le premier qui vous vient à l'esprit</span>. Ne le dites pas à haute voix et attendez la fin
+          du timer pour que l'on mette en commun. »
+        </p>
+        <p class="text-slate-500 mb-6"><strong>Ciel, Nuage, Pluie...</strong></p>
+
+        <div class="flex items-center justify-between mb-4 bg-blue-50 p-4 rounded-xl">
+          <button onclick="startTimer('Timer1', 'Bar1', 'Count1')" id="Timer1" class="bg-blue-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-blue-700 transition active:scale-95 shadow-md">
+            Lancer la réflexion (15s)
+          </button>
+          <div id="Count1" class="text-2xl font-mono font-bold text-blue-600">15s</div>
+        </div>
+        <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden mb-8 border border-slate-200">
+          <div id="Bar1" class="progress-bar bg-blue-500 h-full w-0"></div>
+        </div>
+
+        <div class="flex gap-2 mb-6">
+          <input
+            type="text"
+            id="input1"
+            onkeypress="if(event.key==='Enter') addEntry('1')"
+            placeholder="Nouveau mot cité..."
+            class="flex-1 border-2 border-slate-200 rounded-xl px-4 py-2 focus:border-blue-500 outline-none transition"
+          />
+          <button onclick="addEntry('1')" class="bg-slate-800 text-white px-6 py-2 rounded-xl hover:bg-slate-900 font-bold">Ajouter</button>
+        </div>
+
+        <div id="stats1" class="space-y-4 min-h-[50px]"></div>
+      </section>
+
+      <div class="flex justify-center my-6">
+        <button onclick="toggleBilan()" class="bg-indigo-100 text-indigo-700 px-8 py-3 rounded-full font-bold border-2 border-indigo-200 hover:bg-indigo-200 transition">
+          Afficher le Bilan de l'Expérience 1
+        </button>
+      </div>
+
+      <div id="bilanTemp" class="hidden bg-indigo-900 text-white p-8 rounded-3xl shadow-xl my-10 fade-in">
+        <div class="relative z-10">
+          <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">Ce qu'il faut retenir :</h2>
+
+          <div class="space-y-6 text-lg">
+            <p class="leading-relaxed">
+              Une IA ne "comprend" pas le sens de vos mots. Elle se contente de
+              <strong class="text-indigo-300">prédire statistiquement le mot suivant</strong>
+              après une suite de mots.
+            </p>
+
+            <div class="grid md:grid-cols-2 gap-6 mt-4">
+              <div class="border-l-4 border-indigo-400 pl-4">
+                <p><strong>Le plus probable :</strong> L'IA choisit le mot qui revient le plus souvent dans ses données (ex: "Orage").</p>
+              </div>
+              <div class="border-l-4 border-purple-400 pl-4">
+                <p><strong>L'imprévisible :</strong> L'IA s'autorise un mot un peu moins probable (ex: "Mélancolie").</p>
+              </div>
+            </div>
+
+            <p class="bg-indigo-800/50 p-4 rounded-xl border border-indigo-700 mt-6 italic">
+              C’est cette capacité à s'éloigner du choix évident que l’on appelle la
+              <span class="text-indigo-300 font-bold underline">Température de l’IA</span>.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        function toggleBilan() {
+          const bilan = document.getElementById("bilanTemp");
+          bilan.classList.toggle("hidden");
+          if (!bilan.classList.contains("hidden")) {
+            bilan.scrollIntoView({ behavior: "smooth" });
+          }
+        }
+      </script>
+
+      <hr class="border-slate-300 border-dashed" />
+
+      <section class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200">
+        <h2 class="text-2xl font-bold text-orange-700 mb-2">2. L'Hallucination (Nombres)</h2>
+
+        <p class="text-slate-500 mb-6 italic">
+          « Trouvez le nombre qui complète cette suite. Gardez en tête <span class="text-indigo-600 font-bold">le premier qui vous vient à l'esprit</span>. Ne le dites pas à haute voix et attendez la
+          fin du timer pour que l'on mette en commun. »
+        </p>
+        <p class="text-slate-500 mb-6"><strong>12, 85, 4, 102...</strong></p>
+
+        <div class="flex items-center justify-between mb-4 bg-orange-50 p-4 rounded-xl">
+          <button onclick="startTimer('Timer2', 'Bar2', 'Count2')" id="Timer2" class="bg-orange-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-orange-700 transition active:scale-95 shadow-md">
+            Lancer la réflexion (15s)
+          </button>
+          <div id="Count2" class="text-2xl font-mono font-bold text-orange-600">15s</div>
+        </div>
+        <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden mb-8 border border-slate-200">
+          <div id="Bar2" class="progress-bar bg-orange-500 h-full w-0"></div>
+        </div>
+
+        <div class="flex gap-2 mb-6">
+          <input
+            type="number"
+            id="input2"
+            onkeypress="if(event.key==='Enter') addEntry('2')"
+            placeholder="Nombre suggéré..."
+            class="flex-1 border-2 border-slate-200 rounded-xl px-4 py-2 focus:border-orange-500 outline-none transition"
+          />
+          <button onclick="addEntry('2')" class="bg-slate-800 text-white px-6 py-2 rounded-xl hover:bg-slate-900 font-bold">Ajouter</button>
+        </div>
+
+        <div id="stats2" class="space-y-4 min-h-[50px]"></div>
+      </section>
+      <div class="flex justify-center my-6">
+        <button onclick="toggleBilan2()" class="bg-orange-100 text-orange-700 px-8 py-3 rounded-full font-bold border-2 border-orange-200 hover:bg-orange-200 transition">
+          Afficher le Bilan de l'Expérience 2
+        </button>
+      </div>
+
+      <div id="bilanHallu" class="hidden bg-slate-900 text-white p-8 rounded-3xl shadow-xl my-10 fade-in border-t-4 border-orange-500">
+        <div class="relative z-10">
+          <h2 class="text-2xl font-bold mb-6 flex items-center gap-3"><span>🧠</span> Pourquoi l'IA "hallucine" ?</h2>
+
+          <div class="space-y-6 text-lg leading-relaxed">
+            <p>
+              Contrairement à nous, <strong class="text-orange-400">l'IA n'a pas de bouton "Je ne sais pas"</strong>. Elle est programmée pour toujours fournir la suite statistique la plus cohérente
+              selon sa base de données.
+            </p>
+
+            <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 space-y-4">
+              <p>
+                Face à vos nombres (12, 85, 4, 102), elle ne cherche pas de règle mathématique. Elle projette ces chiffres et se demande :
+                <br /><span class="italic text-slate-400">"Dans mes milliards de textes, quel nombre apparaît le plus souvent après cette combinaison ?"</span>
+              </p>
+              <p class="text-orange-300 font-bold">Si c'est "42", elle vous répondra "42" avec une assurance totale.</p>
+            </div>
+
+            <div class="bg-emerald-900/30 p-4 rounded-xl border border-emerald-700/50 mt-6">
+              <p class="text-emerald-300">
+                <strong>Le côté rassurant :</strong> L'hallucination n'est pas un mensonge (il n'y a pas d'intention de tromper). C'est simplement une
+                <span class="underline decoration-emerald-500">prédiction statistique dans un vide de sens</span>. L'IA n'a aucune conscience de ce qu'elle raconte.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function toggleBilan2() {
+        const bilan = document.getElementById("bilanHallu");
+        bilan.classList.toggle("hidden");
+        if (!bilan.classList.contains("hidden")) {
+          bilan.scrollIntoView({ behavior: "smooth" });
+        }
+      }
+    </script>
+
+    <script>
+      // Objets pour stocker les données
+      let data = {
+        1: { words: {}, total: 0, color: "bg-blue-500" },
+        2: { words: {}, total: 0, color: "bg-orange-500" }
+      };
+
+      function startTimer(btnId, barId, countId) {
+        const bar = document.getElementById(barId);
+        const btn = document.getElementById(btnId);
+        const countDisplay = document.getElementById(countId);
+        let timeLeft = 15;
+
+        bar.style.transition = "none";
+        bar.style.width = "0%";
+        btn.disabled = true;
+        btn.classList.add("opacity-50");
+
+        setTimeout(() => {
+          bar.style.transition = "width 15s linear";
+          bar.style.width = "100%";
+        }, 50);
+
+        const interval = setInterval(() => {
+          timeLeft--;
+          countDisplay.innerText = timeLeft + "s";
+          if (timeLeft <= 0) {
+            clearInterval(interval);
+            btn.disabled = false;
+            btn.classList.remove("opacity-50");
+            btn.innerText = "Relancer";
+          }
+        }, 1000);
+      }
+
+      function addEntry(id) {
+        const input = document.getElementById("input" + id);
+        const val = input.value.trim().toLowerCase();
+        if (val !== "") {
+          updateEffectif(id, val, 1);
+          input.value = "";
+          input.focus();
+        }
+      }
+
+      function updateEffectif(id, val, delta) {
+        const section = data[id];
+        if (!section.words[val]) section.words[val] = 0;
+        section.words[val] += delta;
+
+        if (section.words[val] <= 0) delete section.words[val];
+
+        section.total = Object.values(section.words).reduce((a, b) => a + b, 0);
+        render(id);
+      }
+
+      function deleteEntry(id, val) {
+        delete data[id].words[val];
+        data[id].total = Object.values(data[id].words).reduce((a, b) => a + b, 0);
+        render(id);
+      }
+
+      function render(id) {
+        const container = document.getElementById("stats" + id);
+        const section = data[id];
+        container.innerHTML = "";
+
+        const sorted = Object.entries(section.words).sort((a, b) => b[1] - a[1]);
+
+        sorted.forEach(([val, count]) => {
+          const percent = Math.round((count / section.total) * 100);
+          const row = document.createElement("div");
+          row.className = "row-item p-3 bg-white border border-slate-100 rounded-xl shadow-sm";
+          row.innerHTML = `
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center gap-4">
+                            <span class="text-lg font-bold capitalize">${val}</span>
+                            <span class="text-xs font-mono px-2 py-1 bg-slate-100 rounded">${percent}% (${count})</span>
+                        </div>
+                        <div class="flex gap-1">
+                            <button onclick="updateEffectif('${id}', '${val}', -1)" class="w-7 h-7 bg-slate-100 rounded hover:bg-slate-200">-</button>
+                            <button onclick="updateEffectif('${id}', '${val}', 1)" class="w-7 h-7 bg-slate-100 rounded hover:bg-slate-200">+</button>
+                            <button onclick="deleteEntry('${id}', '${val}')" class="w-7 h-7 bg-red-50 text-red-500 rounded hover:bg-red-100 ml-2">×</button>
+                        </div>
+                    </div>
+                    <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                        <div class="h-full ${section.color} transition-all duration-500" style="width: ${percent}%"></div>
+                    </div>
+                `;
+          container.appendChild(row);
+        });
+      }
+    </script>
+  </body>
+</html>
