@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fiche Atelier 2 : Nourrir l'IA (Documents & Données)</title>
+    <style>
+      /* STYLE UNIFORME - IDENTIQUE AUX AUTRES FICHES */
+      :root {
+        --primary-color: #4f46e5; /* Indigo */
+        --secondary-color: #818cf8;
+        --accent-color: #f59e0b; /* Amber */
+        --bg-color: #f3f4f6;
+        --card-bg: #ffffff;
+        --text-main: #1f2937;
+        --code-bg: #1e293b;
+        --code-text: #e2e8f0;
+        --success-bg: #d1fae5;
+        --success-text: #065f46;
+      }
+
+      body {
+        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        background: var(--card-bg);
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      header {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        padding: 40px;
+        text-align: center;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 2.2rem;
+        font-weight: 700;
+      }
+      .subtitle {
+        margin-top: 10px;
+        font-size: 1.1rem;
+        opacity: 0.95;
+        font-weight: 300;
+      }
+
+      .meta-container {
+        padding: 20px 40px;
+        background-color: #f9fafb;
+        border-bottom: 1px solid #e5e7eb;
+      }
+      .meta-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+      }
+      .meta-card {
+        background: white;
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #e5e7eb;
+        display: flex;
+        flex-direction: column;
+      }
+      .meta-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #6b7280;
+        margin-bottom: 5px;
+        font-weight: 700;
+      }
+      .meta-value {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--primary-color);
+      }
+
+      .content {
+        padding: 40px;
+      }
+      .phase {
+        margin-bottom: 40px;
+      }
+      .phase h2 {
+        color: var(--primary-color);
+        font-size: 1.5rem;
+        margin-top: 0;
+      }
+
+      /* Tables */
+      table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin: 20px 0;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      th,
+      td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #e5e7eb;
+      }
+      th {
+        background-color: #f3f4f6;
+        font-weight: 700;
+      }
+      tr:last-child td {
+        border-bottom: none;
+      }
+
+      /* Prompt Box */
+      .prompt-box {
+        background-color: var(--code-bg);
+        color: var(--code-text);
+        padding: 25px;
+        border-radius: 8px;
+        font-family: "Consolas", "Monaco", monospace;
+        font-size: 0.9rem;
+        position: relative;
+        margin: 25px 0;
+        border-left: 6px solid var(--accent-color);
+      }
+      .prompt-label {
+        position: absolute;
+        top: -12px;
+        right: 20px;
+        background-color: var(--accent-color);
+        color: white;
+        padding: 4px 12px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        border-radius: 20px;
+        text-transform: uppercase;
+      }
+
+      /* Memento */
+      .memento {
+        background-color: var(--success-bg);
+        border: 1px solid #a7f3d0;
+        border-radius: 12px;
+        padding: 25px;
+      }
+      .memento h2 {
+        color: var(--success-text);
+        margin-top: 0;
+      }
+      .memento-list {
+        list-style: none;
+        padding: 0;
+      }
+      .memento-list li {
+        background: rgba(255, 255, 255, 0.8);
+        padding: 12px 15px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+      }
+      .emoji-icon {
+        font-size: 1.4rem;
+        margin-right: 15px;
+      }
+
+      /* Footer */
+      footer {
+        text-align: center;
+        padding: 25px;
+        font-size: 0.85rem;
+        color: #6b7280;
+        background-color: #f9fafb;
+        border-top: 1px solid #e5e7eb;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Fiche Atelier 2</h1>
+        <div class="subtitle">Comment "Nourrir" l'IA (Fichiers, Web & Images)</div>
+      </header>
+
+      <div class="meta-container">
+        <div class="meta-grid">
+          <div class="meta-card">
+            <div class="meta-label">🎯 Objectif</div>
+            <div class="meta-value">Apprendre à donner du contexte à l'IA via différents formats (PDF, GGB, Web).</div>
+          </div>
+
+          <div class="meta-card">
+            <div class="meta-label">🛠️ Outils</div>
+            <div class="meta-value">Clé USB, Fichiers, Navigateur</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="phase">
+          <h2>Phase 1 : Le Glisser-Déposer (PDF & Word)</h2>
+          <p>La base : l'IA peut lire vos fichiers locaux. Pas besoin de copier-coller le texte page par page (sauf cas particulier voir plus loin).</p>
+
+          <ol>
+            <li>Ouvrez votre dossier (ou votre clé USB).</li>
+            <li>Prenez un fichier <strong>.pdf</strong> (ex: un sujet de BAC) ou <strong>.docx</strong> (Word).</li>
+            <li><strong>Glissez-le</strong> directement au milieu de la fenêtre de chat.</li>
+            <li>Attendez que l'icône du fichier apparaisse.</li>
+            <li><strong>Prompt :</strong> <em>"Analyse ce document. Fais-moi une fiche de synthèse des 3 points clés."</em></li>
+          </ol>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid #e5e7eb; margin: 30px 0" />
+
+        <div class="phase">
+          <h2>Phase 2 : L'Œil et le Lien (Images & URL)</h2>
+          <p>L'IA peut "voir" et "naviguer". Testons ces deux capacités.</p>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px">
+            <div style="background: #f0f9ff; border: 1px solid #bae6fd; padding: 15px; border-radius: 8px">
+              <strong style="color: #0369a1">🖼️ L'Image</strong>
+              <p style="font-size: 0.9rem; color: #0c4a6e">Glissez une image (photo d'expérience, schéma, graphique) ou faites une capture d'écran.</p>
+              <div class="prompt-box" style="margin: 10px 0; padding: 15px; font-size: 0.8rem">"Décris précisément ce que tu vois sur cette image. À quoi sert ce dispositif ?"</div>
+            </div>
+
+            <div style="background: #fffbeb; border: 1px solid #fde68a; padding: 15px; border-radius: 8px">
+              <strong style="color: #92400e">🌐 Le Lien Web</strong>
+              <p style="font-size: 0.9rem; color: #78350f">Copiez l'URL d'un site public (Wikipédia, site du Ministère) ou d'une image.</p>
+              <div class="prompt-box" style="margin: 10px 0; padding: 15px; font-size: 0.8rem">"Va lire le contenu de cette page [Coller URL] et résume-moi l'article."</div>
+            </div>
+          </div>
+          <div style="margin-top: 25px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px">
+            <h3 style="margin-top: 0; color: #475569; font-size: 1.1rem">🛠️ Le "Petit Technique" (Pour réussir vos imports)</h3>
+
+            <table style="border: none; margin: 0">
+              <tbody>
+                <tr style="border: none">
+                  <td style="border: none; padding: 10px 0; vertical-align: top">
+                    <strong>1. Qu'est-ce qu'une URL ?</strong>
+                  </td>
+                  <td style="border: none; padding: 10px 0 10px 20px">
+                    C'est l'adresse unique d'une page web. Elle se trouve tout en haut de votre navigateur (la longue ligne de texte).<br />
+                    <em>Exemple :</em> <code style="background: #e2e8f0; padding: 2px 5px; border-radius: 4px">https://fr.wikipedia.org/wiki/Intelligence_artificielle</code><br />
+                    👉 <strong>L'action :</strong> Cliquez une fois dessus pour tout sélectionner, puis Copiez (Ctrl+C).
+                  </td>
+                </tr>
+                <tr style="border: none">
+                  <td style="border: none; padding: 10px 0; vertical-align: top; border-top: 1px solid #e2e8f0">
+                    <strong>2. La Capture d'écran</strong><br />
+                    <em>(Screenshot)</em>
+                  </td>
+                  <td style="border: none; padding: 10px 0 10px 20px; border-top: 1px solid #e2e8f0">
+                    Pour copier une image, un graphique ou une erreur à l'écran sans enregistrer de fichier :<br />
+                    🖥️ <strong>PC (Windows) :</strong> Touches <kbd>Windows</kbd> + <kbd>Maj</kbd> + <kbd>S</kbd><br />
+                    🍎 <strong>Mac :</strong> Touches <kbd>Cmd</kbd> + <kbd>Maj</kbd> + <kbd>4</kbd><br />
+                    👉 <strong>L'action :</strong> Sélectionnez la zone, puis allez dans l'IA et faites "Coller" (Ctrl+V).
+                  </td>
+                </tr>
+                <tr style="border: none">
+                  <td style="border: none; padding: 10px 0; vertical-align: top; border-top: 1px solid #e2e8f0">
+                    <strong>3. Le Glisser-Déposer</strong><br />
+                    <em>(Drag & Drop)</em>
+                  </td>
+                  <td style="border: none; padding: 10px 0 10px 20px; border-top: 1px solid #e2e8f0">
+                    Prenez un fichier (PDF, Image) depuis votre bureau ou dossier, maintenez le clic gauche enfoncé, et relâchez-le directement au milieu de la conversation avec l'IA.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid #e5e7eb; margin: 30px 0" />
+
+        <div class="phase">
+          <h2>Phase 3 : Le Test GeoGebra (.ggb)</h2>
+          <p>Pour les collègues de Maths : ChatGPT ne peut pas "ouvrir" GeoGebra, mais il peut lire le code caché dedans (XML).</p>
+
+          <ol>
+            <li>Prenez un fichier <strong>.ggb</strong> (GeoGebra).</li>
+            <li>Glissez-le dans ChatGPT.</li>
+            <li>
+              <strong>Prompt :</strong>
+              <em
+                >"Analyse ce fichier. Je sais que c'est une archive compressée. Lis le fichier XML à l'intérieur pour essayer de me décrire les objets géométriques présents (points, droites,
+                fonctions)."</em
+              >
+            </li>
+          </ol>
+          <p style="font-size: 0.9rem; font-style: italic; color: #4b5563">👉 Résultat surprenant : Il arrive souvent à lister les coordonnées des points et les équations !</p>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid #e5e7eb; margin: 30px 0" />
+
+        <div class="phase">
+          <h2>Phase 4 : Quand ça bloque (Articles payants & ENT)</h2>
+          <p>Si vous donnez une URL vers un article du <em>Monde</em> (édition abonnés via l'ENT), l'IA va vous dire : <strong>"Je ne peux pas accéder à cette page"</strong>.</p>
+
+          <div style="background: #fef2f2; border-left: 5px solid #ef4444; padding: 15px; border-radius: 8px; margin-bottom: 20px">
+            <strong style="color: #991b1b">⛔ Pourquoi ?</strong>
+            <p style="color: #7f1d1d; margin: 5px 0">L'IA n'a pas vos mots de passe ENT. Elle reste bloquée à la porte (Paywall).</p>
+          </div>
+
+          <h3>Les 2 solutions de contournement :</h3>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Méthode</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>A. L'Imprimante Virtuelle</strong><br />(Le plus propre)</td>
+                <td>
+                  1. Sur l'article, faites <code>Ctrl + P</code> (Imprimer).<br />
+                  2. Choisissez "Enregistrer au format PDF".<br />
+                  3. Glissez ce PDF dans l'IA (Phase 1).
+                </td>
+              </tr>
+              <tr>
+                <td><strong>B. La "Brute"</strong><br />(Le plus rapide)</td>
+                <td>
+                  1. Faites <code>Ctrl + A</code> (Tout sélectionner).<br />
+                  2. Faites <code>Ctrl + C</code> (Copier).<br />
+                  3. Dans l'IA : "Analyse le texte suivant : [<code>Ctrl + V</code>]".<br />
+                  <em>L'IA ignorera les menus et pubs pour se concentrer sur le texte.</em>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div style="background: #f0f9ff; border: 1px solid #bae6fd; padding: 15px; border-radius: 8px; margin-top: 15px">
+            <strong style="color: #0369a1">🐍 Cas Particulier : Capytale (Python)</strong>
+            <p style="margin: 5px 0 0 0; color: #075985; font-size: 0.9rem">
+              Pour les activités <strong>Capytale</strong> (souvent impossibles à imprimer proprement en PDF) : utilisez la <strong>Méthode B</strong>. Sélectionnez tout le code et les consignes à la
+              souris, copiez, et collez le tout directement dans la fenêtre de chat. Ça marche parfaitement pour générer une correction ou une explication de code !
+            </p>
+          </div>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid #e5e7eb; margin: 30px 0" />
+
+        <div class="phase">
+          <h2>Phase 5 : Le Cas "Impossible" (Animations & Interactifs)</h2>
+          <p>Certains contenus sont invisibles pour l'IA via un simple lien : les simulations physiques, les animations interactives ou les diaporamas page par page.</p>
+          <p>Ici, on applique la méthode du <strong>"Brutosaure"</strong> : on transforme le "film" en "bande dessinée" pour l'IA.</p>
+
+          <h3>L'Exercice "Arc-en-ciel" :</h3>
+          <p>
+            Prenons cette animation complexe (Université de Nantes) qui explique la réfraction : <br />
+            <a href="https://phyanim.sciences.univ-nantes.fr/optiqueGeo/arc_en_ciel/arc_en_ciel.php" target="_blank" style="color: var(--primary-color); font-weight: bold">Voir l'animation</a>
+          </p>
+
+          <div style="background: #f0f9ff; border: 1px solid #bae6fd; padding: 20px; border-radius: 8px">
+            <strong style="color: #0369a1">La Procédure "Rafale" :</strong>
+            <ol style="color: #0c4a6e; margin-top: 10px">
+              <li>Ouvrez l'outil de capture (<code>Windows + Maj + S</code> ou Outil Capture).</li>
+              <li>Capturez l'état initial (le rayon blanc qui arrive) ➔ Collez dans le Chat (<code>Ctrl + V</code>).</li>
+              <li>Sur le site, faites avancer l'animation (cliquez sur "Pas à pas" ou changez l'angle) pour voir la décomposition de la lumière.</li>
+              <li>Capturez ce nouvel état ➔ Collez à la suite dans le Chat.</li>
+              <li>Capturez l'état final (l'arc-en-ciel formé).</li>
+            </ol>
+
+            <div class="prompt-box" style="margin-top: 15px">
+              <span class="prompt-label">Prompt</span>
+              "Je t'ai envoyé 3 captures successives d'une même animation scientifique. Analyse la chronologie : décris le trajet du rayon lumineux dans la goutte d'eau (réfraction, réflexion) et
+              explique le phénomène physique final démontré par la dernière image."
+            </div>
+          </div>
+        </div>
+
+        <div class="memento">
+          <h2>💡 Récapitulatif : Comment nourrir l'IA ?</h2>
+          <ul class="memento-list">
+            <li>
+              <span class="emoji-icon">📂</span>
+              <div><strong>Fichiers (PDF, Doc, GGB) :</strong> Le glisser-déposer fonctionne pour presque tout.</div>
+            </li>
+            <li>
+              <span class="emoji-icon">🚫</span>
+              <div><strong>Liens bloqués (ENT/Abonnés) :</strong> L'IA ne passe pas les mots de passe. <strong>Solution :</strong> "Imprimer en PDF" ou Copier-Coller le texte.</div>
+            </li>
+            <li>
+              <span class="emoji-icon">📸</span>
+              <div><strong>Animations & Interactifs :</strong> Méthode "Rafale". Faites une <strong>série de captures d'écran</strong> (début/milieu/fin) pour que l'IA comprenne le mouvement.</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <footer>Généré par votre assistant IA • Formation IA & Pédagogie</footer>
+    </div>
+  </body>
+</html>

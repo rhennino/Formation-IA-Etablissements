@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fiche Atelier 3 : Les Formats de Sortie (LaTeX & HTML)</title>
+    <style>
+      /* STYLE UNIFORME - IDENTIQUE AUX AUTRES FICHES */
+      :root {
+        --primary-color: #4f46e5; /* Indigo */
+        --secondary-color: #818cf8;
+        --accent-color: #f59e0b; /* Amber */
+        --bg-color: #f3f4f6;
+        --card-bg: #ffffff;
+        --text-main: #1f2937;
+        --code-bg: #1e293b;
+        --code-text: #e2e8f0;
+        --success-bg: #d1fae5;
+        --success-text: #065f46;
+      }
+
+      body {
+        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        background: var(--card-bg);
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      header {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        padding: 40px;
+        text-align: center;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 2.2rem;
+        font-weight: 700;
+      }
+      .subtitle {
+        margin-top: 10px;
+        font-size: 1.1rem;
+        opacity: 0.95;
+        font-weight: 300;
+      }
+
+      .meta-container {
+        padding: 20px 40px;
+        background-color: #f9fafb;
+        border-bottom: 1px solid #e5e7eb;
+      }
+      .meta-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+      }
+      .meta-card {
+        background: white;
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #e5e7eb;
+        display: flex;
+        flex-direction: column;
+      }
+      .meta-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #6b7280;
+        margin-bottom: 5px;
+        font-weight: 700;
+      }
+      .meta-value {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--primary-color);
+      }
+
+      .content {
+        padding: 40px;
+      }
+      .phase {
+        margin-bottom: 40px;
+      }
+      .phase h2 {
+        color: var(--primary-color);
+        font-size: 1.5rem;
+        margin-top: 0;
+      }
+
+      /* Prompt Box */
+      .prompt-box {
+        background-color: var(--code-bg);
+        color: var(--code-text);
+        padding: 25px;
+        border-radius: 8px;
+        font-family: "Consolas", "Monaco", monospace;
+        font-size: 0.9rem;
+        position: relative;
+        margin: 25px 0;
+        border-left: 6px solid var(--accent-color);
+      }
+      .prompt-label {
+        position: absolute;
+        top: -12px;
+        right: 20px;
+        background-color: var(--accent-color);
+        color: white;
+        padding: 4px 12px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        border-radius: 20px;
+        text-transform: uppercase;
+      }
+
+      /* Memento */
+      .memento {
+        background-color: var(--success-bg);
+        border: 1px solid #a7f3d0;
+        border-radius: 12px;
+        padding: 25px;
+      }
+      .memento h2 {
+        color: var(--success-text);
+        margin-top: 0;
+      }
+      .memento-list {
+        list-style: none;
+        padding: 0;
+      }
+      .memento-list li {
+        background: rgba(255, 255, 255, 0.8);
+        padding: 12px 15px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+      }
+      .emoji-icon {
+        font-size: 1.4rem;
+        margin-right: 15px;
+      }
+
+      /* Footer */
+      footer {
+        text-align: center;
+        padding: 25px;
+        font-size: 0.85rem;
+        color: #6b7280;
+        background-color: #f9fafb;
+        border-top: 1px solid #e5e7eb;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Fiche Atelier 3</h1>
+        <div class="subtitle">Les Formats de Sortie (De Word à l'Interactif)</div>
+      </header>
+
+      <div class="meta-container">
+        <div class="meta-grid">
+          <div class="meta-card">
+            <div class="meta-label">🎯 Objectif</div>
+            <div class="meta-value">Gérer parfaitement les formules mathématiques et créer des supports interactifs.</div>
+          </div>
+          <div class="meta-card">
+            <div class="meta-label">🛠️ Outils</div>
+            <div class="meta-value">ChatGPT, Overleaf, Navigateur Web</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="phase">
+          <h2>Phase 1 : Les Formats Classiques (Pour Tous)</h2>
+          <p>Avant de parler technique, comment récupérer simplement un cours d'Histoire, d'Anglais ou de Français généré par l'IA ?</p>
+
+          <div class="prompt-box">
+            <span class="prompt-label">Prompt "Généraliste"</span>
+            "Agis comme un expert pédagogique. Crée une fiche de révision structurée sur <strong>[Votre Sujet : ex: La Révolution Française / The Present Perfect]</strong>.<br />
+            Utilise des titres clairs, des points clés (bullet points) et un tableau récapitulatif à la fin."
+          </div>
+
+          <h3>Les 3 méthodes d'export :</h3>
+          <ul style="list-style-type: none; padding: 0">
+            <li style="background: white; padding: 15px; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 10px">
+              <strong>1. Le Copier-Coller Intelligent (Word) :</strong><br />
+              Ne copiez pas "à la souris". Utilisez le petit bouton 📋 <strong>"Copy"</strong> en bas de la réponse de l'IA. Collez dans Word. <br />
+              <em>Avantage :</em> Il garde les titres en Gras et les tableaux.
+            </li>
+            <li style="background: white; padding: 15px; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 10px">
+              <strong>2. L'Export PDF ou Word:</strong><br />
+              Avec ChatGPT, demandez : <em>"Génère un fichier PDF (ou Word ou autre à vous de tester) téléchargeable de cette fiche"</em>. L'IA va créer un lien de téléchargement.
+            </li>
+            <li style="background: white; padding: 15px; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 10px">
+              <strong>3. Le Format Texte (.txt) :</strong><br />
+              Demandez : <em>"Donne-moi cette fiche au format texte brut (Notepad)"</em>. Utile pour les ENT/Pronote capricieux qui n'aiment pas la mise en forme.
+            </li>
+          </ul>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid #e5e7eb; margin: 30px 0" />
+        <div class="phase">
+          <h2>Phase 2 : Le Défi des Sciences (Formules & LaTeX)</h2>
+          <p><em>Cette partie concerne surtout les profs qui ont besoin d'écrire des formules mathématiques. Les autres peuvent passer à la Phase 4.</em></p>
+          <p>Commençons par ce que tout le monde connaît. Le problème des sciences, c'est la formule : $\vec{u} + \vec{v}$.</p>
+
+          <div class="prompt-box">
+            <span class="prompt-label">Prompt 1</span>
+            "Agis comme un prof de Maths. Génère un petit cours synthétique sur la <strong>Relation de Chasles</strong> avec 2 exemples numériques.<br />
+            Propose-moi le résultat sous deux formats :<br />
+            1. Un texte brut prêt à être copié dans Word.<br />
+            2. Un lien vers un fichier PDF téléchargeable (si tu peux)."
+          </div>
+
+          <p style="font-size: 0.9rem; margin-top: 15px; color: #4b5563">
+            👉 <strong>Observation :</strong> Copiez le texte dans Word. Souvent, les vecteurs sont moches ou cassés. Le PDF est propre, mais impossible à modifier si vous voulez changer un chiffre.
+          </p>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid #e5e7eb; margin: 30px 0" />
+
+        <div class="phase">
+          <h2>Phase 3 : Le Format "Universitaire" (LaTeX via Overleaf)</h2>
+          <p>Pour un document scientifique professionnel, LaTeX est incontournable. L'IA sait l'écrire parfaitement pour vous.</p>
+
+          <ol>
+            <li>Demandez à l'IA : <em>"Donne-moi le code LaTeX complet pour ce cours sur Chasles. Inclus les packages mathématiques standards."</em></li>
+            <li>
+              Allez sur le site <strong><a href="https://www.overleaf.com" target="_blank" style="color: var(--primary-color)">Overleaf.com</a></strong> (Création de compte gratuite).
+            </li>
+            <li>Créez un <strong>"New Project"</strong> -> <strong>"Blank Project"</strong>.</li>
+            <li>Effacez tout ce qui est à gauche, et collez le code donné par l'IA.</li>
+            <li>Cliquez sur <strong>Recompile</strong> (à droite).</li>
+          </ol>
+
+          <div style="background: #fffbeb; border: 1px solid #fde68a; padding: 15px; border-radius: 8px; margin-top: 15px">
+            <strong style="color: #92400e">💡 L'Astuce Modif :</strong>
+            <p style="color: #78350f; margin: 5px 0">
+              Le code LaTeX fait peur car il est complexe. Pour modifier un mot (ex: remplacer "Chasles" par "Al-Kashi" pour tester) :<br />
+              Faites <strong>Ctrl + F</strong> (ou Cmd + F) dans la fenêtre de code, tapez votre mot clé, et modifiez-le directement. Recompilez pour voir le changement.
+            </p>
+          </div>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid #e5e7eb; margin: 30px 0" />
+
+        <div class="phase">
+          <h2>Phase 4 : Le Format "Web & Mobile" (HTML)</h2>
+          <p>C'est la révélation de cet atelier. Le HTML permet d'avoir des couleurs, des formules parfaites et de s'adapter aux téléphones des élèves.</p>
+
+          <div class="prompt-box">
+            <span class="prompt-label">Prompt 2</span>
+            "Transforme ce cours sur Chasles en un fichier <strong>HTML autonome</strong>.<br />
+            <strong>Consignes de style :</strong><br />
+            - Utilise un design moderne, coloré et aéré.<br />
+            - Utilise la bibliothèque 'MathJax' ou 'latex' pour que les vecteurs s'affichent parfaitement.<br />
+            - Ajoute à la fin un <strong>QCM interactif de 3 questions</strong> : l'élève clique sur sa réponse et un bouton 'Voir la correction' affiche la solution juste en dessous (utilise du
+            JavaScript)."
+          </div>
+
+          <div style="background: #ecfdf5; border: 1px solid #a7f3d0; padding: 15px; border-radius: 8px; margin-top: 20px; font-size: 0.9rem">
+            <strong style="color: #065f46">🔍 Zoom Technique : Le secret des formules</strong>
+            <p style="color: #064e3b; margin-top: 5px">
+              Si vos formules restent écrites en code (ex: $\vec{u}$), c'est qu'il manque cette ligne magique dans le code HTML généré. Vérifiez que l'IA a bien mis ceci juste après la balise
+              <strong>&lt;head&gt;</strong>
+            </p>
+            <code style="display: block; background: #064e3b; color: #a7f3d0; padding: 10px; border-radius: 4px; font-size: 0.75rem; overflow-x: auto; white-space: pre-wrap; font-family: monospace">
+              &lt;script&gt;<br />
+              &nbsp;&nbsp;window.MathJax = {<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;tex: {<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inlineMath: [['$', '$'], ['\\(', '\\)']],<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;displayMath: [['$$', '$$'], ['\\[', '\\]']]<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;}<br />
+              &nbsp;&nbsp;};<br />
+              &lt;/script&gt;<br /><br />
+              &lt;script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"&gt;&lt;/script&gt;
+            </code>
+          </div>
+
+          <h3>Comment visualiser le résultat ?</h3>
+          <ol>
+            <li>L'IA vous donne un bloc de code. Copiez-le.</li>
+            <li>
+              Allez sur un site comme <strong><a href="https://html.onlineviewer.net/" target="_blank" style="color: var(--primary-color)">HTML Viewer Online</a></strong> et collez le code pour voir
+              le résultat immédiat.
+            </li>
+            <li>
+              <strong>Mieux (Sans manipuler le Bloc-notes) :</strong> Utilisez un site comme <strong>HTML Online Viewer</strong>. Collez votre code et cliquez sur le bouton
+              <strong>"Export"</strong> (ou Download).<br />
+              Allez dans votre dossier <em>Téléchargements</em>. Vous trouverez un fichier avec un nom générique (type <code>online_viewer_net.html</code>.<br />
+              <strong>Action :</strong> Renommez-le en <code>cours.html</code> et double-cliquez dessus : il s'ouvre directement dans votre navigateur !
+            </li>
+          </ol>
+
+          <div style="background: #f0f9ff; border: 1px solid #bae6fd; padding: 15px; border-radius: 8px; margin-top: 15px">
+            <strong style="color: #0369a1">📱 Le Test Mobile</strong>
+            <p style="color: #0c4a6e; margin: 5px 0">
+              Appuyez sur la touche <strong>F12</strong> de votre clavier. Cliquez sur l'icône "Téléphone/Tablette" en haut à gauche de la fenêtre qui s'ouvre.<br />
+              Vous voyez maintenant votre cours tel qu'un élève le verra sur son smartphone. Le texte s'adapte tout seul !
+            </p>
+          </div>
+        </div>
+
+        <div class="memento">
+          <h2>💡 Récapitulatif Formats</h2>
+          <ul class="memento-list">
+            <li>
+              <span class="emoji-icon">📄</span>
+              <div><strong>Word/PDF :</strong> Bien pour imprimer, mais nul pour modifier les maths.</div>
+            </li>
+            <li>
+              <span class="emoji-icon">🎓</span>
+              <div><strong>LaTeX (Overleaf) :</strong> Le standard pro. Utilisez <code>Ctrl + F</code> pour ne pas vous perdre dans le code.</div>
+            </li>
+            <li>
+              <span class="emoji-icon">🌐</span>
+              <div><strong>HTML :</strong> Le format magique. Interactif, joli, adaptatif (mobile) et gère très bien les maths.</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <footer>Généré par votre assistant IA • Formation IA & Pédagogie</footer>
+    </div>
+  </body>
+</html>

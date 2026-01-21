@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fiche Atelier 1 : Premiers Pas & Prompting</title>
+    <style>
+      /* REPRISE EXACTE DU STYLE DES ATELIERS PRECEDENTS POUR UNIFORMITÉ */
+      :root {
+        --primary-color: #4f46e5; /* Indigo */
+        --secondary-color: #818cf8;
+        --accent-color: #f59e0b; /* Amber */
+        --bg-color: #f3f4f6;
+        --card-bg: #ffffff;
+        --text-main: #1f2937;
+        --text-light: #6b7280;
+        --code-bg: #1e293b;
+        --code-text: #e2e8f0;
+        --success-bg: #d1fae5;
+        --success-text: #065f46;
+      }
+
+      body {
+        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        background: var(--card-bg);
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      /* Header Styling */
+      header {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        padding: 40px 40px 30px 40px;
+        text-align: center;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 2.2rem;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+      }
+
+      .subtitle {
+        margin-top: 10px;
+        font-size: 1.1rem;
+        opacity: 0.95;
+        font-weight: 300;
+      }
+
+      /* Meta Info Grid */
+      .meta-container {
+        padding: 20px 40px;
+        background-color: #f9fafb;
+        border-bottom: 1px solid #e5e7eb;
+      }
+
+      .meta-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+      }
+
+      .meta-card {
+        background: white;
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #e5e7eb;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .meta-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--text-light);
+        margin-bottom: 5px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .meta-value {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--primary-color);
+      }
+
+      /* Content Sections */
+      .content {
+        padding: 40px;
+      }
+
+      .phase {
+        margin-bottom: 40px;
+      }
+
+      .phase h2 {
+        color: var(--primary-color);
+        margin-top: 0;
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      h3 {
+        color: var(--text-main);
+        font-size: 1.15rem;
+        margin-top: 25px;
+        font-weight: 600;
+      }
+
+      p,
+      ul,
+      ol {
+        margin-bottom: 15px;
+        color: #374151;
+      }
+
+      ul,
+      ol {
+        padding-left: 25px;
+      }
+
+      li {
+        margin-bottom: 8px;
+      }
+
+      /* Tables */
+      table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin: 20px 0;
+        font-size: 0.95rem;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      th,
+      td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #e5e7eb;
+      }
+
+      th {
+        background-color: #f3f4f6;
+        font-weight: 700;
+        color: var(--text-main);
+        text-transform: uppercase;
+        font-size: 0.8rem;
+      }
+
+      tr:last-child td {
+        border-bottom: none;
+      }
+
+      tr:hover td {
+        background-color: #fafafa;
+      }
+
+      /* NEW STYLE: Prompting Blocks (CODE) */
+      .code-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        margin: 20px 0;
+      }
+
+      .code-block {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        padding: 15px;
+        border-radius: 8px;
+        position: relative;
+      }
+
+      .code-letter {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--primary-color);
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        opacity: 0.2;
+      }
+
+      .code-title {
+        font-weight: bold;
+        color: var(--primary-color);
+        margin-bottom: 5px;
+        display: block;
+      }
+
+      /* Prompt Box */
+      .prompt-box {
+        background-color: var(--code-bg);
+        color: var(--code-text);
+        padding: 25px;
+        border-radius: 8px;
+        font-family: "Consolas", "Monaco", monospace;
+        font-size: 0.9rem;
+        position: relative;
+        margin: 25px 0;
+        border-left: 6px solid var(--accent-color);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .prompt-label {
+        position: absolute;
+        top: -12px;
+        right: 20px;
+        background-color: var(--accent-color);
+        color: white;
+        padding: 4px 12px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        border-radius: 20px;
+        text-transform: uppercase;
+      }
+
+      /* Footer */
+      footer {
+        text-align: center;
+        padding: 25px;
+        font-size: 0.85rem;
+        color: var(--text-light);
+        background-color: #f9fafb;
+        border-top: 1px solid #e5e7eb;
+      }
+
+      /* Memento Section */
+      .memento {
+        background-color: var(--success-bg);
+        border: 1px solid #a7f3d0;
+        border-radius: 12px;
+        padding: 25px;
+      }
+
+      .memento h2 {
+        color: var(--success-text);
+        font-size: 1.3rem;
+        margin-top: 0;
+      }
+
+      .memento-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .memento-list li {
+        background: rgba(255, 255, 255, 0.8);
+        padding: 12px 15px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+      }
+
+      .emoji-icon {
+        font-size: 1.4rem;
+        margin-right: 15px;
+      }
+
+      @media (max-width: 650px) {
+        .meta-grid,
+        .code-grid {
+          grid-template-columns: 1fr;
+        }
+        header {
+          padding: 30px 20px;
+        }
+        .content {
+          padding: 25px 20px;
+        }
+      }
+
+      @media print {
+        body {
+          background: white;
+          padding: 0;
+        }
+        .container {
+          box-shadow: none;
+          max-width: 100%;
+          border-radius: 0;
+          border: none;
+        }
+        .code-grid {
+          display: block;
+        }
+        .code-block {
+          margin-bottom: 10px;
+          border: 1px solid #ccc;
+        }
+        .nav-home-float {
+          position: fixed;
+          top: 20px;
+          left: 20px;
+          background: var(--card-bg);
+          padding: 10px 15px;
+          border-radius: 30px;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+          text-decoration: none;
+          color: var(--primary-color);
+          font-weight: 700;
+          font-size: 0.8rem;
+          z-index: 1000;
+          border: 1px solid #e5e7eb;
+          transition: all 0.2s;
+        }
+
+        .nav-home-float:hover {
+          transform: scale(1.05);
+          background: var(--primary-color);
+          color: white;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Fiche Atelier 1</h1>
+        <div class="subtitle">Choisir son IA & Maîtriser le Prompting</div>
+      </header>
+
+      <div class="meta-container">
+        <div class="meta-grid">
+          <div class="meta-card">
+            <div class="meta-label">🎯 Objectif</div>
+            <div class="meta-value">Créer son compte, choisir le bon outil et apprendre à rédiger une demande efficace.</div>
+          </div>
+          <div class="meta-card">
+            <div class="meta-label">🛠️ Outils</div>
+            <div class="meta-value">ChatGPT, Gemini, Perplexity, Mistral (fr), Claude etc...</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="phase">
+          <h2>Phase 1 : Le Casting (Quelle IA pour quoi ?)</h2>
+          <p>Toutes les IA ne servent pas à la même chose. Voici le guide pour choisir le bon outil en fonction de votre besoin.</p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Nom de l'IA</th>
+                <th>Son Super-Pouvoir</th>
+                <th>À utiliser quand...</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>ChatGPT</strong> (OpenAI)</td>
+                <td>La Référence (Le Pionnier)</td>
+                <td>Pour tout faire : créer des cours, des exercices, du code. C'est le couteau suisse par excellence, très polyvalent.</td>
+              </tr>
+              <tr>
+                <td><strong>Gemini</strong> (Google)</td>
+                <td>L'Écosystème Connecté</td>
+                <td>L'alternative directe. Idéal si vous utilisez déjà Google (Docs, Drive) car il peut lire vos documents directement. Très performant depuis sa mise à jour de fin 2025.</td>
+              </tr>
+              <tr>
+                <td><strong>Mistral</strong> (Le Chat)</td>
+                <td>La Souveraineté 🇫🇷</td>
+                <td>Si vous voulez une IA française, hébergée en Europe (conforme RGPD). Excellent pour la rédaction, la synthèse et le respect des données.</td>
+              </tr>
+              <tr>
+                <td><strong>Perplexity</strong></td>
+                <td>Le Moteur de Recherche 2.0</td>
+                <td><strong>Cite ses sources !</strong> Remplace Google pour trouver une info vérifiée, chiffrée et récente avec les liens web directs.</td>
+              </tr>
+              <tr>
+                <td><strong>Claude</strong> (Anthropic)</td>
+                <td>La Plume & Le Code</td>
+                <td>Le style d'écriture le plus "humain" et naturel (moins robotique). Aussi redoutable pour le code et l'analyse de documents très longs (PDF).</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>
+            <strong>Action :</strong> Créez un compte sur l'un d'eux. <br /><em>Conseil : Utilisez votre compte Google/Microsoft ("Continuer avec...") pour ne pas gérer un nouveau mot de passe.</em>
+          </p>
+        </div>
+        <div
+          style="
+            background: #fffbeb;
+            border: 1px solid #fcd34d;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+          "
+        >
+          <div>
+            <strong style="color: #92400e; display: block; margin-bottom: 5px">🏆 Qui est le meilleur aujourd'hui ?</strong>
+            <p style="margin: 0; font-size: 0.9rem; color: #b45309">
+              Les performances changent chaque semaine. Vérifiez le classement mondial neutre (Chatbot Arena) pour voir le Top 10 actuel. Le classement dépend du type de question posée.
+            </p>
+          </div>
+          <a
+            href="https://lmarena.ai/fr/leaderboard"
+            target="_blank"
+            style="
+              background: #d97706;
+              color: white;
+              text-decoration: none;
+              padding: 10px 20px;
+              border-radius: 6px;
+              font-weight: bold;
+              font-size: 0.9rem;
+              white-space: nowrap;
+              transition: background 0.2s;
+            "
+          >
+            Voir le Classement ↗
+          </a>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid #e5e7eb; margin: 30px 0" />
+
+        <div class="phase">
+          <h2>Phase 2 : Le Prompting (Méthode C.O.D.E.)</h2>
+          <p>Pour parler à une IA, il faut être structuré comme un programmeur, mais avec des mots simples.</p>
+          <p>Voici la méthode <strong>C.O.D.E.</strong> pour ne jamais rater une réponse :</p>
+
+          <div class="code-grid">
+            <div class="code-block">
+              <span class="code-letter">C</span>
+              <span class="code-title">CONTEXTE</span>
+              <p>Qui êtes-vous ? Quel est le sujet ?<br /><em>Ex: "Je suis prof de physique en 1ère..."</em></p>
+            </div>
+            <div class="code-block">
+              <span class="code-letter">O</span>
+              <span class="code-title">OBJECTIF</span>
+              <p>Que voulez-vous exactement ? (Verbe d'action)<br /><em>Ex: "Génère un QCM de 10 questions..."</em></p>
+            </div>
+            <div class="code-block">
+              <span class="code-letter">D</span>
+              <span class="code-title">DÉTAILS (Données)</span>
+              <p>Les contraintes (Temps, Format, Niveau).<br /><em>Ex: "Pas de calculatrice, inclure des pièges..."</em></p>
+            </div>
+            <div class="code-block">
+              <span class="code-letter">E</span>
+              <span class="code-title">EXEMPLE (Format)</span>
+              <p>À quoi doit ressembler la sortie ?<br /><em>Ex: "Sous forme de tableau CSV pour Excel."</em></p>
+            </div>
+          </div>
+
+          <h3>À vous de jouer : 4 Missions pour tester !</h3>
+          <p>Ne restez pas théorique. Copiez, adaptez et testez l'un de ces prompts pour voir la magie opérer :</p>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px">
+            <div style="background: #eff6ff; padding: 15px; border-radius: 8px; border: 1px solid #bfdbfe">
+              <strong style="color: #1e40af; display: block; margin-bottom: 10px">Mission 1 : Le QCM Flash</strong>
+              <p style="font-size: 0.85rem; color: #1e3a8a; margin-bottom: 10px">Pour évaluer rapidement en début d'heure.</p>
+              <div style="background: white; padding: 10px; border-radius: 4px; font-size: 0.8rem; font-family: monospace; color: #333">
+                "Agis comme un prof de <strong>[Matière]</strong>. Rédige un QCM de 5 questions sur <strong>[Sujet]</strong>. Inclus des pièges classiques. Présente sous forme de tableau."
+              </div>
+            </div>
+
+            <div style="background: #f0fdf4; padding: 15px; border-radius: 8px; border: 1px solid #bbf7d0">
+              <strong style="color: #166534; display: block; margin-bottom: 10px">Mission 2 : L'Idée de TP</strong>
+              <p style="font-size: 0.85rem; color: #14532d; margin-bottom: 10px">Pour innover avec peu de budget.</p>
+              <div style="background: white; padding: 10px; border-radius: 4px; font-size: 0.8rem; font-family: monospace; color: #333">
+                "Je cherche une idée de TP pour illustrer <strong>[Notion]</strong> en 1h. Contrainte : utiliser uniquement du matériel <strong>[Ex: de cuisine / pas cher]</strong>."
+              </div>
+            </div>
+
+            <div style="background: #fffbeb; padding: 15px; border-radius: 8px; border: 1px solid #fde68a">
+              <strong style="color: #92400e; display: block; margin-bottom: 10px">Mission 3 : L'Analogie</strong>
+              <p style="font-size: 0.85rem; color: #78350f; margin-bottom: 10px">Pour expliquer l'abstrait aux élèves.</p>
+              <div style="background: white; padding: 10px; border-radius: 4px; font-size: 0.8rem; font-family: monospace; color: #333">
+                "Explique <strong>[Concept difficile]</strong> à un élève de 14 ans qui déteste les maths. Utilise une analogie avec <strong>[Ex: Fortnite / le Football]</strong>."
+              </div>
+            </div>
+
+            <div style="background: #f3e8ff; padding: 15px; border-radius: 8px; border: 1px solid #d8b4fe">
+              <strong style="color: #6b21a8; display: block; margin-bottom: 10px">Mission 4 : L'Œil de l'IA (Vision)</strong>
+              <p style="font-size: 0.85rem; color: #581c87; margin-bottom: 10px">Glissez-déposez un fichier (PDF ou Image) dans le chat.</p>
+              <div style="background: white; padding: 10px; border-radius: 4px; font-size: 0.8rem; font-family: monospace; color: #333">
+                <strong>Si Image :</strong> "Décris précisément ce schéma pour un élève malvoyant."<br />
+                <strong>Si PDF :</strong> "Fais-moi un résumé structuré des 3 points clés de ce document."
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid #e5e7eb; margin: 30px 0" />
+
+        <div class="phase">
+          <h2>Phase 3 : Le "Ping-Pong" (Itération)</h2>
+          <p>L'erreur du débutant est de s'arrêter à la première réponse. L'IA fonctionne par essai-erreur. Il faut dialoguer !</p>
+
+          <div class="prompt-box">
+            <span class="prompt-label">Exemple de Dialogue</span>
+            <strong>Vous (Prompt 1) :</strong> "Fais un cours sur la gravité."<br />
+            <strong>IA :</strong> (Donne un texte trop long et ennuyeux...)<br /><br />
+            <strong>Vous (Prompt 2 - Itération) :</strong> "C'est trop complexe. Simplifie pour des élèves de 10 ans et ajoute une analogie avec un trampoline."<br /><br />
+            <strong>Vous (Prompt 3 - Format) :</strong> "Super. Maintenant, transforme cette analogie en un petit exercice à trous."
+          </div>
+
+          <div style="background: #eef2ff; border: 1px solid #c7d2fe; padding: 15px; border-radius: 8px">
+            <h3 style="margin-top: 0; color: #3730a3; font-size: 1rem">💡 L'astuce "Régénérer"</h3>
+            <p style="margin-bottom: 0; color: #312e81">
+              Si la réponse est mauvaise, ne changez rien : cliquez juste sur le petit bouton <strong>"Regenerate"</strong> (ou la flèche ronde). L'IA proposera une autre version, souvent meilleure.
+            </p>
+          </div>
+        </div>
+
+        <div class="memento">
+          <h2>📝 Résumé pour démarrer</h2>
+          <ul class="memento-list">
+            <li>
+              <span class="emoji-icon">🤖</span>
+              <div><strong>Choix :</strong> Gemini/ChatGPT (Polyvalent), Perplexity (Sources), Mistral (Français).</div>
+            </li>
+            <li>
+              <span class="emoji-icon">🧱</span>
+              <div><strong>Prompt :</strong> Pensez <strong>C.O.D.E.</strong> (Contexte, Objectif, Détails, Exemple).</div>
+            </li>
+            <li>
+              <span class="emoji-icon">🏓</span>
+              <div><strong>Méthode :</strong> Ne prenez jamais le premier résultat. Discutez, critiquez, affinez.</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <footer>Généré par votre assistant IA • Formation IA & Pédagogie</footer>
+    </div>
+  </body>
+</html>
