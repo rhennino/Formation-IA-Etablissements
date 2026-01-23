@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fiche Atelier 10 : L'IA comme Tuteur</title>
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [
+            ["$", "$"],
+            ["\\(", "\\)"],
+          ],
+          displayMath: [
+            ["$$", "$$"],
+            ["\\[", "\\]"],
+          ],
+        },
+      };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+      /* STYLE UNIFORME - IDENTIQUE À LA FICHE 9 */
+      :root {
+        --primary-color: #4f46e5; /* Indigo */
+        --secondary-color: #818cf8;
+        --accent-color: #f59e0b; /* Amber */
+        --bg-color: #f3f4f6;
+        --card-bg: #ffffff;
+        --text-main: #1f2937;
+        --text-light: #6b7280;
+        --code-bg: #1e293b;
+        --code-text: #e2e8f0;
+        --success-bg: #d1fae5;
+        --success-text: #065f46;
+        --warning-bg: #fffbeb;
+        --warning-text: #92400e;
+      }
+
+      body {
+        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        background: var(--card-bg);
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        position: relative; /* Pour le positionnement du bouton retour */
+      }
+
+      /* Bouton retour accueil (Intégré proprement) */
+      .nav-home-float {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 8px 15px;
+        border-radius: 30px;
+        text-decoration: none;
+        color: white;
+        font-weight: 600;
+        font-size: 0.85rem;
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        transition: background 0.2s;
+        z-index: 10;
+      }
+      .nav-home-float:hover {
+        background: rgba(255, 255, 255, 0.4);
+      }
+
+      header {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        padding: 50px 20px 40px 20px; /* Un peu plus de padding haut pour le bouton */
+        text-align: center;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 2.2rem;
+        font-weight: 700;
+      }
+      .subtitle {
+        margin-top: 10px;
+        font-size: 1.1rem;
+        opacity: 0.95;
+        font-weight: 300;
+      }
+
+      .meta-container {
+        padding: 20px 40px;
+        background-color: #f9fafb;
+        border-bottom: 1px solid #e5e7eb;
+      }
+      .meta-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+      }
+      .meta-card {
+        background: white;
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #e5e7eb;
+        display: flex;
+        flex-direction: column;
+      }
+      .meta-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #6b7280;
+        margin-bottom: 5px;
+        font-weight: 700;
+      }
+      .meta-value {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--primary-color);
+      }
+
+      .content {
+        padding: 40px;
+      }
+      .phase {
+        margin-bottom: 40px;
+      }
+      .phase h2 {
+        color: var(--primary-color);
+        font-size: 1.5rem;
+        margin-top: 0;
+        border-bottom: 2px solid #e5e7eb;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+      }
+
+      /* Prompt Box (Style Fiche 9) */
+      .prompt-box {
+        background-color: var(--code-bg);
+        color: var(--code-text);
+        padding: 25px;
+        border-radius: 8px;
+        font-family: "Consolas", "Monaco", monospace;
+        font-size: 0.9rem;
+        position: relative;
+        margin: 25px 0;
+        border-left: 6px solid var(--accent-color);
+      }
+      .prompt-label {
+        position: absolute;
+        top: -12px;
+        right: 20px;
+        background-color: var(--accent-color);
+        color: white;
+        padding: 4px 12px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        border-radius: 20px;
+        text-transform: uppercase;
+      }
+
+      /* Alert Box (Pour les observations) */
+      .alert-box {
+        background: var(--success-bg);
+        border-left: 5px solid var(--success-text);
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 15px;
+        color: var(--success-text);
+      }
+
+      /* Memento */
+      .memento {
+        background-color: var(--warning-bg); /* Un peu différent du vert, ou vert comme Fiche 9 */
+        border: 1px solid #fcd34d;
+        border-radius: 12px;
+        padding: 25px;
+      }
+      .memento h2 {
+        color: var(--warning-text);
+        margin-top: 0;
+      }
+      .memento-list {
+        list-style: none;
+        padding: 0;
+      }
+      .memento-list li {
+        background: rgba(255, 255, 255, 0.8);
+        padding: 12px 15px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+      }
+      .emoji-icon {
+        font-size: 1.4rem;
+        margin-right: 15px;
+      }
+
+      footer {
+        text-align: center;
+        padding: 25px;
+        font-size: 0.85rem;
+        color: #6b7280;
+        background-color: #f9fafb;
+        border-top: 1px solid #e5e7eb;
+      }
+
+      @media (max-width: 650px) {
+        .meta-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <a href="index.html" class="nav-home-float">← Retour Accueil</a>
+
+      <header>
+        <h1>Fiche Atelier 10</h1>
+        <div class="subtitle">L'IA comme Tuteur Socratique</div>
+      </header>
+
+      <div class="meta-container">
+        <div class="meta-grid">
+          <div class="meta-card">
+            <div class="meta-label">🎯 Objectif</div>
+            <div class="meta-value">Apprendre à utiliser l'IA pour comprendre, pas pour copier la réponse.</div>
+          </div>
+          <div class="meta-card">
+            <div class="meta-label">🛠️ Outils</div>
+            <div class="meta-value">ChatGPT (Etudier et Apprendre), Gemini (Apprentissage Guidé)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="phase">
+          <h2>Introduction : Changer de posture</h2>
+          <p>
+            Jusqu'à présent, nous avons utilisé l'IA pour produire. Aujourd'hui, nous allons voir comment <strong>conseiller aux élèves</strong> de l'utiliser pour apprendre, sans tricher. Le but est
+            de transformer l'IA en répétiteur patient.
+          </p>
+        </div>
+
+        <div class="phase">
+          <h2>Phase 1 : Activer le mode "Professeur"</h2>
+          <p>L'IA doit refuser de donner la réponse brute. Selon l'outil, l'accès diffère légèrement :</p>
+          <ul style="background: #f8fafc; padding: 20px 20px 20px 40px; border-radius: 8px; border: 1px solid #e2e8f0">
+            <li style="margin-bottom: 10px"><strong>Sur ChatGPT :</strong> Cliquez sur <code>+</code> et cherchez "Etudier et Apprendre".</li>
+            <li style="margin-bottom: 10px"><strong>Sur Gemini :</strong> Cliquez sur <code>Outils</code> et cherchez "Apprentissage Guidé".</li>
+          </ul>
+        </div>
+
+        <div class="phase">
+          <h2>Phase 2 : La Tentative de "Triche"</h2>
+          <p>Mettez-vous dans la peau d'un élève pressé. Fournissez un exercice (texte, capture d'écran ou URL) et exigez la réponse.</p>
+
+          <div class="prompt-box">
+            <span class="prompt-label">Prompt Élève</span>
+            "Tiens, voici mon exercice. Corrige-le moi et donne-moi la solution complète tout de suite."
+          </div>
+
+          <div class="alert-box">
+            <strong>👀 Ce qu'il faut observer :</strong>
+            <p style="margin: 5px 0 0 0">
+              Si le mode est bien activé, l'IA va <strong>refuser poliment</strong>.<br />
+              Elle dira : <em>"Je peux t'aider, mais je ne vais pas te donner la réponse. Qu'est-ce que tu as déjà essayé ?"</em>
+            </p>
+          </div>
+        </div>
+
+        <div class="phase">
+          <h2>Phase 3 : Jouer le jeu (L'Échafaudage)</h2>
+          <p>Maintenant que l'IA a refusé, interagissez en faisant des erreurs volontaires pour tester sa pédagogie.</p>
+
+          <p><strong>Essayez ces réponses fausses :</strong></p>
+          <div class="prompt-box" style="border-left-color: #ef4444">
+            <span class="prompt-label" style="background-color: #ef4444">Tests à faire</span>
+            ❌ "Je comprends rien, c'est trop dur." (Doit simplifier)<br />
+            ❌ "Je pense que le résultat est 42." (Doit corriger sans donner la solution)<br />
+            🤔 "Est-ce que je dois utiliser le théorème de Pythagore ?" (Fausse piste ?)
+          </div>
+        </div>
+
+        <div class="memento">
+          <h2>💡 Bilan pour les élèves</h2>
+          <ul class="memento-list">
+            <li>
+              <span class="emoji-icon">⛔</span>
+              <div><strong>La Règle d'Or :</strong> Si l'IA te donne la réponse tout de suite, tu n'as rien appris (et c'est interdit).</div>
+            </li>
+            <li>
+              <span class="emoji-icon">🤝</span>
+              <div><strong>Le Bon Usage :</strong> Utilise l'IA comme un prof particulier disponible 24h/24 pour te débloquer.</div>
+            </li>
+            <li>
+              <span class="emoji-icon">🧠</span>
+              <div><strong>Mode Socratique :</strong> Privilégiez les prompts du type <em>"Fais-moi réviser"</em> ou <em>"Pose-moi des questions"</em>.</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <footer>Généré par votre assistant IA • Formation IA & Pédagogie</footer>
+    </div>
+  </body>
+</html>
