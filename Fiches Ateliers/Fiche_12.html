@@ -315,17 +315,85 @@
 
         <div class="phase">
           <h2>2. Le Code Couleur (Probabilités)</h2>
-          <p>Les couleurs indiquent la certitude de l'IA (Vert = Sûr, Rouge = Hésitant).</p>
-          <ol>
-            <li>Nettoyer la fenêtre.</li>
-            <li>Générer un prompt aléatoire (Par exemple : "Pourquoi les éléphants ont-ils une mémoire si développée ?"). Copier la réponse ci dessous</li>
-            <textarea id="reponse_p2" class="table-input" style="width: 100%; height: 60px; margin-top: 10px" placeholder="Écrivez votre observation ici..."></textarea>
+          <p>
+            L'IA ne choisit pas toujours le mot le plus évident. Mais comment savoir si elle est sûre d'elle ?
+            <br /><em>Passez votre souris sur les mots colorés dans Vittascience pour trouver la réponse ci-dessous.</em>
+          </p>
 
-            <li>Cliquez sur un mot coloré dans le texte généré.</li>
-            <li style="margin-bottom: 10px">Choisissez un autre mot dans la liste proposée.</li>
+          <div style="background: white; border: 1px solid #e5e7eb; border-radius: 8px; padding: 15px; margin-bottom: 20px">
+            <strong style="color: #4f46e5">🎨 Décodez la légende :</strong>
+            <table style="width: 100%; margin-top: 10px; border-collapse: collapse">
+              <tr style="border-bottom: 1px solid #f3f4f6">
+                <td style="padding: 8px">
+                  <span style="display: inline-block; width: 15px; height: 15px; background-color: #15803d; border-radius: 50%; margin-right: 5px"></span>
+                  <strong>Vert Foncé</strong>
+                </td>
+                <td style="padding: 8px">Le mot est le choix n°1 et sa probabilité est :</td>
+                <td style="padding: 8px">
+                  <select id="prob_vert_fonce" class="table-input" style="cursor: pointer">
+                    <option value="">-- Choisir --</option>
+                    <option value="plus80">Supérieure à 90%</option>
+                    <option value="20-80">Entre 50% et 90%</option>
+                    <option value="moins20">Inférieure à 90%</option>
+                  </select>
+                </td>
+              </tr>
+              <tr style="border-bottom: 1px solid #f3f4f6">
+                <td style="padding: 8px">
+                  <span style="display: inline-block; width: 15px; height: 15px; background-color: #86efac; border-radius: 50%; margin-right: 5px"></span>
+                  <strong>Vert Clair</strong>
+                </td>
+                <td style="padding: 8px">Le mot est souvent le choix n°1 mais sa probabilité est :</td>
+                <td style="padding: 8px">
+                  <select id="prob_vert_clair" class="table-input" style="cursor: pointer">
+                    <option value="">-- Choisir --</option>
+                    <option value="plus80">Supérieure à 90%</option>
+                    <option value="20-80">Entre 50% et 90%</option>
+                    <option value="moins20">Inférieure à 50%</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 8px">
+                  <span style="display: inline-block; width: 15px; height: 15px; background-color: #ef4444; border-radius: 50%; margin-right: 5px"></span>
+                  <strong>Rouge</strong>
+                </td>
+                <td style="padding: 8px">Le mot est rarement le choix n°1 mais sa probabilité est :</td>
+                <td style="padding: 8px">
+                  <select id="prob_rouge" class="table-input" style="cursor: pointer">
+                    <option value="">-- Choisir --</option>
+                    <option value="plus80">Supérieure à 90%</option>
+                    <option value="20-80">Entre 50% et 90%</option>
+                    <option value="moins20">Inférieure à 50%</option>
+                  </select>
+                </td>
+              </tr>
+            </table>
+          </div>
+
+          <ol>
+            <li>Cliquez sur <strong>Nettoyer</strong> (la corbeille) pour faire place nette.</li>
+            <li>
+              Générez un prompt aléatoire ou utilisez celui-ci :<br />
+              <em>"Pourquoi les éléphants ont-ils une mémoire si développée ?"</em>
+            </li>
+
+            <div style="background-color: #eff6ff; border-left: 4px solid #3b82f6; padding: 10px 15px; margin: 15px 0; border-radius: 0 4px 4px 0; font-size: 0.9rem">
+              <span style="font-size: 1.2rem; margin-right: 10px">💡</span>
+              <strong>Astuce :</strong> Avez-vous repéré le bouton magique pour copier tout le texte d'un coup ? Cherchez l'icône
+              <span style="background: white; border: 1px solid #ccc; padding: 2px 5px; border-radius: 3px">❐</span> (deux rectangles l'un sur l'autre) juste après la réponse de l'IA.
+            </div>
+
+            <li>
+              Collez la réponse de l'IA ici :
+              <textarea id="reponse_p2" class="table-input" style="width: 100%; height: 60px; margin-top: 10px" placeholder="Collez le texte ici (Ctrl+V)..."></textarea>
+            </li>
+
+            <li style="margin-top: 15px"><strong>L'Expérience :</strong> Cliquez sur un mot coloré (rouge ou vert clair) dans Vittascience.</li>
+            <li style="margin-bottom: 10px">Dans la liste qui s'affiche, choisissez un <strong>autre mot</strong>.</li>
             <li>
               <strong>Que devient la suite de la phrase ?</strong>
-              <textarea id="reponse_p3" class="table-input" style="width: 100%; height: 60px; margin-top: 10px" placeholder="Écrivez votre observation ici..."></textarea>
+              <textarea id="reponse_p3" class="table-input" style="width: 100%; height: 60px; margin-top: 10px" placeholder="Écrivez la nouvelle version de la phrase ici..."></textarea>
             </li>
           </ol>
         </div>
