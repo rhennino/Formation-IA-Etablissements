@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fiche 1 : Premiers pas avec l'IA</title>
+    <style>
+      /* STYLE SIMPLIFIÉ ET ÉPURÉ */
+      :root {
+        --primary-color: #2563eb; /* Bleu plus standard */
+        --bg-color: #f8fafc;
+        --card-bg: #ffffff;
+        --text-main: #334155;
+        --accent-color: #f59e0b;
+      }
+
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: var(--card-bg);
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        position: relative;
+      }
+
+      /* Navigation retour */
+      .nav-home-float {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background: rgba(0, 0, 0, 0.05);
+        color: #333;
+        padding: 5px 12px;
+        border-radius: 20px;
+        text-decoration: none;
+        font-size: 0.8rem;
+        font-weight: bold;
+      }
+      .nav-home-float:hover {
+        background: rgba(0, 0, 0, 0.1);
+      }
+
+      header {
+        background: #2563eb;
+        color: white;
+        padding: 40px 20px;
+        text-align: center;
+      }
+      h1 {
+        margin: 0;
+        font-size: 2rem;
+      }
+      .subtitle {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        margin-top: 10px;
+      }
+
+      .content {
+        padding: 30px;
+      }
+
+      /* Les Étapes (Grosses boîtes numérotées) */
+      .step-box {
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 30px;
+        position: relative;
+      }
+      .step-number {
+        position: absolute;
+        top: -15px;
+        left: 20px;
+        background: #2563eb;
+        color: white;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 30px;
+        font-weight: bold;
+      }
+      .step-title {
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: #2563eb;
+        margin-bottom: 15px;
+        margin-left: 10px;
+      }
+
+      /* Boutons de connexion */
+      .login-btn {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 1.1rem;
+        transition: transform 0.2s;
+      }
+      .btn-google {
+        background-color: #fff;
+        border: 2px solid #ddd;
+        color: #444;
+      }
+      .btn-openai {
+        background-color: #10a37f;
+        color: white;
+      }
+      .login-btn:hover {
+        transform: scale(1.02);
+      }
+
+      /* Le Cadre Noir (Prompt) */
+      .prompt-container {
+        margin-top: 20px;
+      }
+      .instruction-arrow {
+        text-align: center;
+        font-weight: bold;
+        color: #d97706;
+        margin-bottom: 5px;
+      }
+      .black-box {
+        background-color: #1e293b; /* Gris très foncé */
+        color: #e2e8f0; /* Blanc cassé */
+        padding: 20px;
+        border-radius: 8px;
+        font-family: monospace;
+        font-size: 1rem;
+        border-left: 5px solid #f59e0b; /* Bordure orange */
+      }
+
+      /* Mots à modifier */
+      .to-change {
+        color: #fcd34d; /* Jaune */
+        font-weight: bold;
+        border-bottom: 2px dashed #fcd34d;
+      }
+
+      footer {
+        text-align: center;
+        padding: 20px;
+        color: #888;
+        font-size: 0.8rem;
+        border-top: 1px solid #eee;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <a href="index.html" class="nav-home-float">← Retour</a>
+
+      <header>
+        <h1>Premiers pas avec l'IA</h1>
+        <div class="subtitle">Guide Ultra-Simplifié pour débuter en 5 minutes</div>
+      </header>
+
+      <div class="content">
+        <div class="step-box">
+          <div class="step-number">1</div>
+          <div class="step-title">Choisir et se Connecter</div>
+          <p>Pour utiliser une IA, c'est comme pour une boîte mail : il faut s'identifier. Le plus simple est d'utiliser votre compte Google existant.</p>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px">
+            <div>
+              <strong style="display: block; text-align: center; margin-bottom: 5px">Option A (Google)</strong>
+              <a href="https://gemini.google.com/" target="_blank" class="login-btn btn-google"> 🔵 Ouvrir Gemini </a>
+              <p style="text-align: center; font-size: 0.9rem">Cliquez sur "Connexion" puis choisissez votre adresse gmail habituelle.</p>
+            </div>
+            <div>
+              <strong style="display: block; text-align: center; margin-bottom: 5px">Option B (ChatGPT)</strong>
+              <a href="https://chatgpt.com/" target="_blank" class="login-btn btn-openai"> 🟢 Ouvrir ChatGPT </a>
+              <p style="text-align: center; font-size: 0.9rem">Cliquez sur "Sign Up" ou "Log in", puis "Continue with Google".</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-box">
+          <div class="step-number">2</div>
+          <div class="step-title">Comprendre le "Cadre Noir"</div>
+          <p>Dans nos formations, vous verrez souvent des cadres noirs. Ce sont des <strong>"Consignes prêtes à l'emploi"</strong> (on appelle ça des <em>Prompts</em>).</p>
+
+          <div style="background: #eff6ff; padding: 15px; border-radius: 8px; border: 1px solid #bfdbfe">
+            <strong>Comment ça marche ?</strong>
+            <ol>
+              <li>Vous <strong>copiez</strong> tout le texte du cadre noir.</li>
+              <li>Vous le <strong>collez</strong> dans la zone de discussion de l'IA.</li>
+              <li>
+                ⚠️ <strong>Important :</strong> Avant de valider, vous devez remplacer les mots en
+                <span style="background: #1e293b; color: #fcd34d; padding: 2px 5px; border-radius: 3px">JAUNE</span> par votre propre sujet.
+              </li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="step-box">
+          <div class="step-number">3</div>
+          <div class="step-title">À vous de jouer !</div>
+          <p>Essayons de créer un QCM (Quiz) en 10 secondes. C'est l'exercice le plus utile pour commencer.</p>
+
+          <div class="prompt-container">
+            <div class="instruction-arrow">👇 1. Sélectionnez et COPIEZ ce texte 👇</div>
+            <div class="black-box">
+              Tu es un enseignant pédagogue.<br /><br />
+              Crée un Quiz (QCM) de 5 questions.<br />
+              Pour des élèves de niveau <span class="to-change">[CLASSE]</span>.<br />
+              Le sujet est : <span class="to-change">[VOTRE SUJET DE COURS]</span>.<br /><br />
+              Affiche les réponses correctes à la toute fin seulement.
+            </div>
+          </div>
+
+          <div style="margin-top: 20px">
+            <p><strong>👇 2. Une fois collé dans l'IA, modifiez-le comme ceci par exemple :</strong></p>
+            <div style="background: #fff; border: 1px solid #ccc; padding: 15px; border-radius: 8px; color: #666; font-style: italic">
+              "Tu es un enseignant pédagogue. Crée un Quiz de 5 questions. Pour des élèves de niveau <strong>3ème</strong>. Le sujet est : <strong>La Seconde Guerre Mondiale</strong>. Affiche les
+              réponses correctes à la toute fin seulement."
+            </div>
+          </div>
+
+          <div style="text-align: center; margin-top: 25px">
+            <span style="font-size: 2rem">🚀</span><br />
+            <strong>Appuyez sur "Entrée" ou la petite flèche pour envoyer.</strong><br />
+            L'IA va générer votre exercice instantanément.
+          </div>
+        </div>
+      </div>
+
+      <footer>Fiche "Découverte" • Formation IA</footer>
+    </div>
+  </body>
+</html>

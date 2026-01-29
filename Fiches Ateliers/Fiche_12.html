@@ -232,6 +232,51 @@
         font-weight: 600;
         color: var(--primary-color);
       }
+      /* STYLE D'IMPRESSION (Invisible à l'écran, actif sur papier/PDF) */
+      @media print {
+        /* Cacher les éléments inutiles sur papier */
+        .nav-home-float,
+        .action-btn,
+        #save-toast,
+        footer,
+        .no-print {
+          display: none !important;
+        }
+
+        /* Réinitialiser le style pour le papier */
+        body,
+        .container {
+          background-color: white !important;
+          box-shadow: none !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          width: 100% !important;
+          max-width: 100% !important;
+        }
+
+        /* S'assurer que les zones de texte sont bien lisibles */
+        input,
+        textarea,
+        .table-input {
+          background-color: white !important; /* Enlève le fond jaune */
+          border: 1px solid #ccc !important;
+          color: black !important;
+          box-shadow: none !important;
+        }
+
+        /* Éviter de couper un tableau ou une phase en deux */
+        .phase,
+        table,
+        .memento {
+          page-break-inside: avoid;
+        }
+
+        /* Ajuster les liens pour qu'ils soient lisibles */
+        a {
+          text-decoration: none;
+          color: black !important;
+        }
+      }
     </style>
   </head>
   <body>
@@ -333,7 +378,7 @@
                   <select id="prob_vert_fonce" class="table-input" style="cursor: pointer">
                     <option value="">-- Choisir --</option>
                     <option value="plus80">Supérieure à 90%</option>
-                    <option value="20-80">Entre 50% et 90%</option>
+                    <option value="20-80">Entre 40% et 90%</option>
                     <option value="moins20">Inférieure à 90%</option>
                   </select>
                 </td>
@@ -348,7 +393,7 @@
                   <select id="prob_vert_clair" class="table-input" style="cursor: pointer">
                     <option value="">-- Choisir --</option>
                     <option value="plus80">Supérieure à 90%</option>
-                    <option value="20-80">Entre 50% et 90%</option>
+                    <option value="20-80">Entre 40% et 90%</option>
                     <option value="moins20">Inférieure à 50%</option>
                   </select>
                 </td>
@@ -363,7 +408,7 @@
                   <select id="prob_rouge" class="table-input" style="cursor: pointer">
                     <option value="">-- Choisir --</option>
                     <option value="plus80">Supérieure à 90%</option>
-                    <option value="20-80">Entre 50% et 90%</option>
+                    <option value="20-80">Entre 40% et 90%</option>
                     <option value="moins20">Inférieure à 50%</option>
                   </select>
                 </td>
@@ -616,6 +661,10 @@
             </li>
           </ul>
         </div>
+      </div>
+
+      <div class="no-print" style="text-align: center; margin: 40px 0">
+        <button onclick="window.print()" class="action-btn" style="background-color: #374151; cursor: pointer">🖨️ Imprimer / Enregistrer en PDF</button>
       </div>
 
       <footer>Généré par votre assistant IA • Formation IA & Pédagogie</footer>
