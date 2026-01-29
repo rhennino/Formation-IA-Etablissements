@@ -445,31 +445,50 @@
 
         <div class="phase">
           <h2>3. La Vision Machine (Les Tokens)</h2>
-          <p>Activez l'option <strong>"Token ID"</strong> dans le menu de droite.</p>
-          <div style="background: #eef2ff; padding: 15px; border-radius: 8px">
-            <strong>🔎 Chasse au Token :</strong> Trouvez le numéro correspondant à un mot courant (ex: "le", "chat").
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px">
+
+          <div style="background: #fffbeb; border-left: 5px solid #f59e0b; padding: 15px; margin-bottom: 20px">
+            <strong>🧠 Qu'est-ce qu'un Token ?</strong>
+            <p style="margin: 5px 0 0 0; font-size: 0.95rem">
+              L'IA ne sait pas lire le français. Elle transforme le texte en une suite de <strong>nombres</strong>. Chaque morceau de texte (mot, syllabe ou ponctuation) associé à un numéro unique
+              s'appelle un <strong>TOKEN</strong>.
+            </p>
+          </div>
+
+          <p>
+            Pour voir le monde comme l'IA, nous allons utiliser une "lunette spéciale".<br />
+            👉 <strong>Action :</strong> Dans le menu de droite sur Vittascience, activez/désactivez l'interrupteur <strong>"Token ID"</strong>.
+          </p>
+          <ul style="font-size: 0.9rem; color: #4b5563; background: white; padding: 10px 20px; border-radius: 8px; border: 1px solid #e5e7eb">
+            <li>🔘 <strong>Désactivé :</strong> Vous voyez le texte (Vision Humaine).</li>
+            <li>🟢 <strong>Activé :</strong> Le texte est remplacé par des tuiles colorées avec des numéros (Vision Machine).</li>
+          </ul>
+
+          <div style="background: #eef2ff; padding: 20px; border-radius: 8px; border: 1px dashed #4f46e5; margin-top: 20px">
+            <strong style="color: #4338ca">🔎 Chasse au Token</strong>
+
+            <p style="margin-top: 15px; margin-bottom: 5px; font-weight: bold">A. Un mot courant (1 mot = 1 token)</p>
+            <p style="font-size: 0.9rem; margin-bottom: 10px">Repérez un mot simple (ex: "le", "chat", "table") et alternez la vue pour trouver son code.</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px">
               <div>
-                <label style="font-size: 0.9rem">Mot choisi :</label>
+                <label style="font-size: 0.85rem; color: #6b7280">Mot choisi :</label>
                 <input type="text" id="token_mot1" class="table-input" style="width: 100%" placeholder="ex: chat" />
               </div>
               <div>
-                <label style="font-size: 0.9rem">Son ID (Numéro) :</label>
+                <label style="font-size: 0.85rem; color: #6b7280">Son ID (Numéro) :</label>
                 <input type="text" id="token_id1" class="table-input" style="width: 100%" placeholder="ex: 4521" />
               </div>
             </div>
-          </div>
-          <p>Activez l'option <strong>"Token ID"</strong> dans le menu de droite.</p>
-          <div style="background: #eef2ff; padding: 15px; border-radius: 8px">
-            <strong>🔎 Chasse au Token :</strong> Trouvez le numéro correspondant à un morceau de mot (ex: "part" dans le mot "partage").
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px">
+
+            <p style="margin-top: 25px; margin-bottom: 5px; font-weight: bold">B. Un mot complexe (1 mot = Plusieurs tokens)</p>
+            <p style="font-size: 0.9rem; margin-bottom: 10px">Parfois, l'IA découpe les mots rares ou longs en morceaux. Trouvez un exemple (ex: une terminaison, une syllabe).</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px">
               <div>
-                <label style="font-size: 0.9rem">Morceau de mot choisi :</label>
+                <label style="font-size: 0.85rem; color: #6b7280">Morceau de mot (Syllabe) :</label>
                 <input type="text" id="token_mot2" class="table-input" style="width: 100%" placeholder="ex: part" />
               </div>
               <div>
-                <label style="font-size: 0.9rem">Son ID (Numéro) :</label>
-                <input type="text" id="token_id2" class="table-input" style="width: 100%" placeholder="ex: 4521" />
+                <label style="font-size: 0.85rem; color: #6b7280">Son ID (Numéro) :</label>
+                <input type="text" id="token_id2" class="table-input" style="width: 100%" placeholder="ex: 887" />
               </div>
             </div>
           </div>
@@ -494,7 +513,7 @@
               <td><input type="text" id="obs_moyen" class="table-input" placeholder="Cohérent ou pas ?" /></td>
             </tr>
             <tr>
-              <td><strong>Élevé</strong> (60%)</td>
+              <td><strong>Élevé</strong> (70%)</td>
               <td>Régénérez 3 fois.</td>
               <td><input type="text" id="obs_eleve" class="table-input" placeholder="L'IA délire-t-elle ?" /></td>
             </tr>
