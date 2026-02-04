@@ -1,366 +1,39 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fiche Atelier 11 : QCM Pronote Express</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirection...</title>
+
+    <meta http-equiv="refresh" content="0; url=https://formation-ia-etablissements-93c525.forge.apps.education.fr/">
 
     <script>
-      window.MathJax = {
-        tex: {
-          inlineMath: [
-            ["$", "$"],
-            ["\\(", "\\)"],
-          ],
-          displayMath: [
-            ["$$", "$$"],
-            ["\\[", "\\]"],
-          ],
-        },
-      };
+        // 1. L'adresse de base du nouveau site (La Forge)
+        const baseUrl = "https://formation-ia-etablissements-93c525.forge.apps.education.fr/";
+
+        // 2. Détection automatique du nom du fichier actuel
+        // (ex: si on est sur Fiche_1.html, cette variable vaudra "Fiche_1.html")
+        const currentFile = window.location.pathname.split('/').pop();
+
+        // 3. Construction de la nouvelle adresse
+        // Si currentFile est vide (racine), on va juste à l'accueil
+        // Sinon, on colle le nom du fichier à l'adresse de base
+        const finalUrl = currentFile ? (baseUrl + currentFile) : baseUrl;
+
+        // 4. Redirection immédiate
+        window.location.href = finalUrl;
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
-    <style>
-      /* STYLE UNIFORME - IDENTIQUE AUX FICHES 9 et 10 */
-      :root {
-        --primary-color: #4f46e5; /* Indigo */
-        --secondary-color: #818cf8;
-        --accent-color: #f59e0b; /* Amber */
-        --bg-color: #f3f4f6;
-        --card-bg: #ffffff;
-        --text-main: #1f2937;
-        --text-light: #6b7280;
-        --code-bg: #1e293b;
-        --code-text: #e2e8f0;
-        --success-bg: #d1fae5;
-        --success-text: #065f46;
-        --warning-bg: #fffbeb;
-        --warning-text: #92400e;
-      }
-
-      body {
-        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        background-color: var(--bg-color);
-        color: var(--text-main);
-        line-height: 1.6;
-        margin: 0;
-        padding: 20px;
-      }
-
-      .container {
-        max-width: 900px;
-        margin: 0 auto;
-        background: var(--card-bg);
-        border-radius: 12px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-        position: relative;
-      }
-
-      /* Bouton retour accueil */
-      .nav-home-float {
-        position: absolute;
-        top: 20px;
-        left: 20px;
-        background: rgba(255, 255, 255, 0.2);
-        padding: 8px 15px;
-        border-radius: 30px;
-        text-decoration: none;
-        color: white;
-        font-weight: 600;
-        font-size: 0.85rem;
-        backdrop-filter: blur(5px);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        transition: background 0.2s;
-        z-index: 10;
-      }
-      .nav-home-float:hover {
-        background: rgba(255, 255, 255, 0.4);
-      }
-
-      header {
-        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-        color: white;
-        padding: 50px 20px 40px 20px;
-        text-align: center;
-      }
-
-      h1 {
-        margin: 0;
-        font-size: 2.2rem;
-        font-weight: 700;
-      }
-      .subtitle {
-        margin-top: 10px;
-        font-size: 1.1rem;
-        opacity: 0.95;
-        font-weight: 300;
-      }
-
-      .meta-container {
-        padding: 20px 40px;
-        background-color: #f9fafb;
-        border-bottom: 1px solid #e5e7eb;
-      }
-      .meta-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 15px;
-      }
-      .meta-card {
-        background: white;
-        padding: 15px;
-        border-radius: 8px;
-        border: 1px solid #e5e7eb;
-        display: flex;
-        flex-direction: column;
-      }
-      .meta-label {
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        color: #6b7280;
-        margin-bottom: 5px;
-        font-weight: 700;
-      }
-      .meta-value {
-        font-size: 1rem;
-        font-weight: 600;
-        color: var(--primary-color);
-      }
-
-      .content {
-        padding: 40px;
-      }
-      .phase {
-        margin-bottom: 40px;
-      }
-      .phase h2 {
-        color: var(--primary-color);
-        font-size: 1.5rem;
-        margin-top: 0;
-        border-bottom: 2px solid #e5e7eb;
-        padding-bottom: 10px;
-        margin-bottom: 20px;
-      }
-
-      /* Prompt Box */
-      .prompt-box {
-        background-color: var(--code-bg);
-        color: var(--code-text);
-        padding: 25px;
-        border-radius: 8px;
-        font-family: "Consolas", "Monaco", monospace;
-        font-size: 0.9rem;
-        position: relative;
-        margin: 25px 0;
-        border-left: 6px solid var(--accent-color);
-      }
-      .prompt-label {
-        position: absolute;
-        top: -12px;
-        right: 20px;
-        background-color: var(--accent-color);
-        color: white;
-        padding: 4px 12px;
-        font-size: 0.75rem;
-        font-weight: bold;
-        border-radius: 20px;
-        text-transform: uppercase;
-      }
-
-      /* Bouton d'action */
-      .action-btn {
-        display: inline-block;
-        background-color: var(--primary-color);
-        color: white;
-        padding: 12px 24px;
-        border-radius: 6px;
-        text-decoration: none;
-        font-weight: bold;
-        transition: background 0.3s;
-        margin-top: 10px;
-        box-shadow: 0 4px 6px rgba(79, 70, 229, 0.3);
-      }
-      .action-btn:hover {
-        background-color: #3730a3;
-        transform: translateY(-2px);
-      }
-
-      /* Memento */
-      .memento {
-        background-color: var(--success-bg);
-        border: 1px solid #a7f3d0;
-        border-radius: 12px;
-        padding: 25px;
-      }
-      .memento h2 {
-        color: var(--success-text);
-        margin-top: 0;
-      }
-      .memento-list {
-        list-style: none;
-        padding: 0;
-      }
-      .memento-list li {
-        background: rgba(255, 255, 255, 0.8);
-        padding: 12px 15px;
-        border-radius: 8px;
-        margin-bottom: 10px;
-        display: flex;
-        align-items: center;
-      }
-      .emoji-icon {
-        font-size: 1.4rem;
-        margin-right: 15px;
-      }
-
-      /* Steps list for procedures */
-      .step-list {
-        list-style: none;
-        padding: 0;
-        counter-reset: step-counter;
-      }
-      .step-list li {
-        position: relative;
-        padding-left: 50px;
-        margin-bottom: 20px;
-      }
-      .step-list li::before {
-        content: counter(step-counter);
-        counter-increment: step-counter;
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 35px;
-        height: 35px;
-        background: var(--secondary-color);
-        color: white;
-        border-radius: 50%;
-        text-align: center;
-        line-height: 35px;
-        font-weight: bold;
-      }
-
-      footer {
-        text-align: center;
-        padding: 25px;
-        font-size: 0.85rem;
-        color: #6b7280;
-        background-color: #f9fafb;
-        border-top: 1px solid #e5e7eb;
-      }
-
-      @media (max-width: 650px) {
-        .meta-grid {
-          grid-template-columns: 1fr;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <a href="index.html" class="nav-home-float">← Retour Accueil</a>
-
-      <header>
-        <h1>Fiche Atelier 11</h1>
-        <div class="subtitle">QCM Pronote Express (La Méthode en 4 Étapes)</div>
-      </header>
-
-      <div class="meta-container">
-        <div class="meta-grid">
-          <div class="meta-card">
-            <div class="meta-label">🎯 Objectif</div>
-            <div class="meta-value">Générer 10 questions en 2 minutes et les importer directement dans Pronote sans saisie manuelle.</div>
-          </div>
-          <div class="meta-card">
-            <div class="meta-label">🛠️ Outils</div>
-            <div class="meta-value"><strong>ChatGPT</strong> (Obligatoire) + <br /><strong>Formatage Pronote</strong> (Web App)</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="content">
-        <div class="phase">
-          <h2>Prérequis : Ouvrir l'outil magique</h2>
-          <p>Tout se passe via une application web dédiée qui fait le pont entre l'IA et Pronote.</p>
-          <div style="text-align: center; margin: 30px 0">
-            <a href="https://formatage-pronote.web.app/" target="_blank" class="action-btn"> 🚀 Ouvrir formatage-pronote.web.app </a>
-          </div>
-        </div>
-
-        <div class="phase">
-          <h2>Étape 1 : Le "Jailbreak" (Copier les instructions)</h2>
-          <p>Pour que ChatGPT "parle" le langage de notre outil, il faut lui donner la règle du jeu.</p>
-
-          <ul class="step-list">
-            <li>
-              <strong>Sur l'outil Web :</strong> Repérez le bouton <code>Copier les instructions pour l'IA</code> et cliquez dessus. <br />
-              <em>(C'est fait ! Les consignes complexes sont maintenant dans votre presse-papier).</em>
-            </li>
-            <li><strong>Sur ChatGPT :</strong> Ouvrez une nouvelle conversation. Faites <code>Ctrl + V</code> (Coller) dans la zone de texte et validez.</li>
-            <li><strong>La réaction :</strong> L'IA va confirmer qu'elle a compris et vous demander quel est le thème du QCM.</li>
-          </ul>
-        </div>
-
-        <div class="phase">
-          <h2>Étape 2 : La Génération (Avec Feedback !)</h2>
-          <p>C'est le moment de créer le contenu. Vous pouvez fournir un texte, un PDF, une image ou juste un sujet.</p>
-
-          <div class="prompt-box">
-            <span class="prompt-label">Votre consigne à l'IA</span>
-            "Génère un QCM de 5 questions sur [VOTRE SUJET/DOCUMENT].<br />
-            Je veux un mélange de Choix Unique et Choix Multiples.<br />
-            <strong>Important :</strong> Ajoute un feedback explicatif (rétroaction) pour chaque réponse fausse, comme indiqué dans les instructions."
-          </div>
-
-          <div style="background: #ecfdf5; border-left: 5px solid #10b981; padding: 15px; border-radius: 8px; margin-top: 15px">
-            <strong style="color: #047857">📋 L'Astuce Copier-Coller</strong>
-            <p style="margin: 5px 0 0 0; color: #065f46">
-              Ne sélectionnez pas le texte à la souris ! Cliquez simplement sur <strong>la petite icône de copie</strong> (deux carrés superposés) sous la réponse de ChatGPT. L'outil triera lui-même
-              ce qui est utile ou non.
-            </p>
-          </div>
-        </div>
-
-        <div class="phase">
-          <h2>Étape 3 : L'Assemblage (La Banque de Questions)</h2>
-          <p>Retournez sur l'outil web (formatage-pronote) :</p>
-
-          <ul class="step-list">
-            <li><strong>Coller :</strong> Faites <code>Ctrl + V</code> dans la zone de texte de l'outil.</li>
-            <li><strong>Observer :</strong> L'outil détecte vos questions. Cliquez sur le bouton <strong>"Ajouter à la banque de questions"</strong>.</li>
-            <li><strong>Trier :</strong> Vous voyez maintenant un aperçu des questions. Supprimez celles qui ne vous plaisent pas (bouton X).</li>
-            <li>
-              <strong>Enrichir (Optionnel) :</strong> Vous voulez plus de questions ? Retournez sur ChatGPT, demandez "Fais-en 5 autres plus difficiles", copiez la réponse, et revenez la coller dans
-              l'outil. C'est cumulatif !
-            </li>
-          </ul>
-        </div>
-
-        <div class="phase">
-          <h2>Étape 4 : Export & Import Pronote</h2>
-          <p>Une fois votre banque de questions prête :</p>
-
-          <ul class="step-list">
-            <li>Cliquez sur <strong>"Télécharger QCM.xml"</strong>. Le fichier <code>QCM-Export.xml</code> arrive dans vos téléchargements.</li>
-            <li>Ouvrez votre <strong>Pronote (Client)</strong> > <em>Outils Pédagogiques</em> > <em>Mes QCM</em>.</li>
-            <li>Cherchez le bouton d'import et choisissez <strong>"Importer des QCMa (au format XML)"</strong> (c'est le secret !). Sélectionnez votre fichier XML.</li>
-            <li>✅ <strong>Succès !</strong> Le QCM apparaît.</li>
-          </ul>
-
-          <div style="background: #f0f9ff; padding: 15px; border-radius: 8px; margin-top: 20px">
-            <strong>👀 Le dernier geste :</strong>
-            <p style="margin: 5px 0 0 0">
-              Dans Pronote, sélectionnez votre nouveau QCM et cliquez sur <strong>"Simuler la vision élève"</strong>. Cela permet de vérifier l'affichage des images, des formules et surtout des
-              <strong>feedbacks</strong> (explications) que nous avons générés.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <footer>Généré par votre assistant IA • Formation IA & Pédagogie</footer>
+</head>
+<body>
+    <div style="text-align: center; padding-top: 50px; font-family: sans-serif;">
+        <h1>Changement d'adresse 🚚</h1>
+        <p>Cette fiche a déménagé sur La Forge.</p>
+        <p>Redirection automatique en cours...</p>
+        <p>
+            <script>
+                document.write('<a href="' + finalUrl + '">Cliquez ici si rien ne se passe</a>');
+            </script>
+        </p>
     </div>
-  </body>
+</body>
 </html>
