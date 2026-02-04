@@ -1,353 +1,39 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fiche Atelier 13 : Différenciation & Tâches Complexes</title>
-    <style>
-      /* STYLE STANDARD IDENTIQUE AUX AUTRES FICHES */
-      :root {
-        --primary-color: #4f46e5;
-        --secondary-color: #818cf8;
-        --accent-color: #f59e0b;
-        --bg-color: #f3f4f6;
-        --card-bg: #ffffff;
-        --text-main: #1f2937;
-        --text-light: #6b7280;
-        --code-bg: #1e293b;
-        --code-text: #e2e8f0;
-        --success-bg: #d1fae5;
-        --success-text: #065f46;
-      }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirection...</title>
 
-      body {
-        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        background-color: var(--bg-color);
-        color: var(--text-main);
-        line-height: 1.6;
-        margin: 0;
-        padding: 20px;
-      }
+    <meta http-equiv="refresh" content="0; url=https://formation-ia-etablissements-93c525.forge.apps.education.fr/">
 
-      .container {
-        max-width: 900px;
-        margin: 0 auto;
-        background: var(--card-bg);
-        border-radius: 12px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-      }
+    <script>
+        // 1. L'adresse de base du nouveau site (La Forge)
+        const baseUrl = "https://formation-ia-etablissements-93c525.forge.apps.education.fr/";
 
-      header {
-        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-        color: white;
-        padding: 40px;
-        text-align: center;
-      }
+        // 2. Détection automatique du nom du fichier actuel
+        // (ex: si on est sur Fiche_1.html, cette variable vaudra "Fiche_1.html")
+        const currentFile = window.location.pathname.split('/').pop();
 
-      h1 {
-        margin: 0;
-        font-size: 2.2rem;
-        font-weight: 700;
-      }
-      .subtitle {
-        margin-top: 10px;
-        font-size: 1.1rem;
-        opacity: 0.95;
-        font-weight: 300;
-      }
+        // 3. Construction de la nouvelle adresse
+        // Si currentFile est vide (racine), on va juste à l'accueil
+        // Sinon, on colle le nom du fichier à l'adresse de base
+        const finalUrl = currentFile ? (baseUrl + currentFile) : baseUrl;
 
-      .meta-container {
-        padding: 20px 40px;
-        background-color: #f9fafb;
-        border-bottom: 1px solid #e5e7eb;
-      }
-      .meta-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 15px;
-      }
-      .meta-card {
-        background: white;
-        padding: 15px;
-        border-radius: 8px;
-        border: 1px solid #e5e7eb;
-        display: flex;
-        flex-direction: column;
-      }
-      .meta-label {
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        color: #6b7280;
-        margin-bottom: 5px;
-        font-weight: 700;
-      }
-      .meta-value {
-        font-size: 1rem;
-        font-weight: 600;
-        color: var(--primary-color);
-      }
-
-      .content {
-        padding: 40px;
-      }
-      .phase {
-        margin-bottom: 40px;
-      }
-      .phase h2 {
-        color: var(--primary-color);
-        font-size: 1.5rem;
-        margin-top: 0;
-      }
-
-      /* Tableau comparatif */
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 15px;
-      }
-      th {
-        background: #f3f4f6;
-        text-align: left;
-        padding: 12px;
-        border-bottom: 2px solid #e5e7eb;
-      }
-      td {
-        padding: 12px;
-        border-bottom: 1px solid #e5e7eb;
-      }
-
-      /* Boîte de consigne (Prompt) */
-      .prompt-box {
-        background-color: var(--code-bg);
-        color: var(--code-text);
-        padding: 25px;
-        border-radius: 8px;
-        font-family: "Consolas", "Monaco", monospace;
-        font-size: 0.9rem;
-        position: relative;
-        margin: 25px 0;
-        border-left: 6px solid var(--accent-color);
-      }
-      .prompt-label {
-        position: absolute;
-        top: -12px;
-        right: 20px;
-        background-color: var(--accent-color);
-        color: white;
-        padding: 4px 12px;
-        font-size: 0.75rem;
-        font-weight: bold;
-        border-radius: 20px;
-        text-transform: uppercase;
-      }
-
-      /* Memento */
-      .memento {
-        background-color: var(--success-bg);
-        border: 1px solid #a7f3d0;
-        border-radius: 12px;
-        padding: 25px;
-      }
-      .memento h2 {
-        color: var(--success-text);
-        margin-top: 0;
-      }
-      .memento-list {
-        list-style: none;
-        padding: 0;
-      }
-      .memento-list li {
-        background: rgba(255, 255, 255, 0.8);
-        padding: 12px 15px;
-        border-radius: 8px;
-        margin-bottom: 10px;
-        display: flex;
-        align-items: center;
-      }
-      .emoji-icon {
-        font-size: 1.4rem;
-        margin-right: 15px;
-      }
-
-      /* Bouton retour flottant */
-      .nav-home-float {
-        position: absolute;
-        top: 20px;
-        left: 20px;
-        background: rgba(255, 255, 255, 0.2);
-        padding: 8px 15px;
-        border-radius: 30px;
-        text-decoration: none;
-        color: white;
-        font-weight: 600;
-        font-size: 0.85rem;
-        backdrop-filter: blur(5px);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-      }
-      .nav-home-float:hover {
-        background: rgba(255, 255, 255, 0.4);
-      }
-      .container {
-        /* ... */
-        position: relative; /* Indispensable pour que le "absolute" de l'enfant reste dedans */
-      }
-
-      footer {
-        text-align: center;
-        padding: 25px;
-        font-size: 0.85rem;
-        color: #6b7280;
-        background-color: #f9fafb;
-        border-top: 1px solid #e5e7eb;
-      }
-
-      @media (max-width: 650px) {
-        .meta-grid {
-          grid-template-columns: 1fr;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <a href="index.html" class="nav-home-float">← Retour Accueil</a>
-      <header>
-        <h1>Fiche Atelier 13</h1>
-        <div class="subtitle">Gérer l'Hétérogénéité & Créer des Tâches Complexes</div>
-      </header>
-
-      <div class="meta-container">
-        <div class="meta-grid">
-          <div class="meta-card">
-            <div class="meta-label">🎯 Objectif</div>
-            <div class="meta-value">Générer des parcours différenciés et des scénarios pédagogiques réalistes.</div>
-          </div>
-          <div class="meta-card">
-            <div class="meta-label">🛠️ Outils Recommandés</div>
-            <div class="meta-value">Claude 3.5 Sonnet (Pédagogie), ChatGPT (Structure), Gemini (Documents)</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="content">
-        <div class="phase">
-          <h2>Phase 1 : La Méthode des 3 Niveaux (Variations)</h2>
-          <p>
-            Au lieu de créer un seul exercice, demandez à l'IA d'en générer trois versions instantanément pour gérer les rythmes différents. Copie colle le prompt suivant dans l'IA de ton choix. A la
-            place de [SUJET] colle ton cours, le contecte une image un pdf etc....
-          </p>
-
-          <div class="prompt-box">
-            <span class="prompt-label">Consigne Type</span>
-            "Voici un exercice classique sur [VOTRE SUJET].<br />
-            Génère 3 déclinaisons pour différencier mon cours :<br />
-            1. <strong>Niveau Guidé (Coup de pouce) :</strong> Ajoute des questions intermédiaires, simplifie le vocabulaire et rappelle la formule à utiliser.<br />
-            2. <strong>Niveau Standard :</strong> L'exercice tel quel.<br />
-            3. <strong>Niveau Expert (Défi) :</strong> Enlève les données inutiles, ajoute une contrainte de budget ou de temps, et demande une justification critique."
-          </div>
-        </div>
-
-        <div class="phase">
-          <h2>Phase 2 : La Tâche Complexe (Scénarisation)</h2>
-          <p>
-            Pour engager les élèves, rien de tel qu'une mise en situation concrète. L'IA excelle pour inventer des histoires réalistes autour d'une notion aride. Copie colle le prompt suivant dans
-            l'IA de ton choix.
-          </p>
-
-          <div class="prompt-box">
-            <span class="prompt-label">Exemple Physique-Chimie</span>
-            "Tu es un expert en pédagogie. <strong>(1. Le Rôle)</strong><br />
-            Le sujet est : <strong>La loi d'Ohm</strong> (Niveau Seconde). <strong>(2. La Cible)</strong><br />
-            <br />
-            Crée une Tâche Complexe scénarisée :<br />
-            <strong>Le Scénario :</strong> Les élèves sont des techniciens stagiaires. Ils doivent réparer un vieux Jukebox de collection pour la fête du lycée, sans faire griller les composants
-            précieux. <strong>(3. Le Contexte)</strong><br />
-            <br />
-            <strong>Livrables attendus :</strong> <strong>(4. La Commande)</strong><br />
-            1. Le dossier technique (fictif) avec les caractéristiques des composants.<br />
-            2. La mission exacte à accomplir.<br />
-            3. Une grille de 'Coups de pouce' à distribuer si l'élève est bloqué (Indices progressifs)."
-          </div>
-
-          <div style="background-color: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 20px; margin-top: 15px">
-            <h4 style="margin-top: 0; color: #4f46e5; display: flex; align-items: center; gap: 10px">🗝️ Les 4 ingrédients indispensables</h4>
-            <ul style="padding-left: 20px; margin-bottom: 0; color: #374151">
-              <li style="margin-bottom: 10px">
-                <strong>1. Le Rôle :</strong> "Tu es expert..." <br />
-                <em style="color: #6b7280; font-size: 0.9rem">👉 Définit le ton et la qualité de la réponse.</em>
-              </li>
-              <li style="margin-bottom: 10px">
-                <strong>2. La Cible :</strong> "Sujet + Niveau" <br />
-                <em style="color: #6b7280; font-size: 0.9rem">👉 Indispensable pour que l'IA adapte la difficulté du vocabulaire et des notions.</em>
-              </li>
-              <li style="margin-bottom: 10px">
-                <strong>3. Le Scénario (Ancrage) :</strong> "Jukebox, Mission spatiale, Enquête..." <br />
-                <em style="color: #6b7280; font-size: 0.9rem">👉 Donne du sens à l'apprentissage. C'est là que l'IA est créative.</em>
-              </li>
-              <li>
-                <strong>4. Les Livrables (Format) :</strong> "Dossier, Grille, Carte..." <br />
-                <em style="color: #6b7280; font-size: 0.9rem">👉 Force l'IA à produire des documents prêts à imprimer plutôt que du texte vague.</em>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="phase">
-          <h2>Phase 3 : Ce qui marche vs Les Pièges</h2>
-          <p>L'IA est une assistante puissante, mais elle a des faiblesses bien connues en sciences.</p>
-
-          <table>
-            <thead>
-              <tr>
-                <th style="color: #166534">✅ Ce qui marche très bien (L'Effet Whaou)</th>
-                <th style="color: #991b1b">⚠️ Les Écueils & Difficultés (Vigilance)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Les Niveaux de difficulté :</strong> Demander "Génère 3 versions : niveau 1 (guidé), niveau 2 (standard), niveau 3 (tâche ouverte)".</td>
-                <td>
-                  <strong>Les Calculs (Physique-Chimie) :</strong> L'IA est nulle en calcul mental. Elle pose bien l'équation mais se trompe souvent dans le résultat. <em>👉 Toujours vérifier.</em>
-                </td>
-              </tr>
-              <tr>
-                <td><strong>La Contextualisation :</strong> "Transforme cet exercice abstrait sur la vitesse en un problème concret (ex: ski alpin aux JO)".</td>
-                <td><strong>La "Fausse" complexité :</strong> Parfois, l'IA rend un exercice plus dur simplement en utilisant des mots compliqués, sans augmenter la profondeur cognitive.</td>
-              </tr>
-              <tr>
-                <td><strong>Les Indices progressifs :</strong> Générer des cartes "Coup de pouce" que le prof peut distribuer aux élèves bloqués.</td>
-                <td><strong>L'Uniformité :</strong> Si le prompt est trop vague ("Fais un exercice"), l'IA sortira toujours le même type de structure scolaire standardisée.</td>
-              </tr>
-              <tr>
-                <td><strong>La Correction Critériée :</strong> Demander à l'IA de générer une grille d'évaluation précise pour la tâche complexe.</td>
-                <td><strong>L'Hallucination de programme :</strong> L'IA connaît mal les programmes scolaires français récents. Il faut lui copier-coller les compétences visées.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="memento">
-          <h2>💡 Récapitulatif</h2>
-          <ul class="memento-list">
-            <li>
-              <span class="emoji-icon">🎭</span>
-              <div><strong>Claude 3.5 Sonnet :</strong> Le meilleur modèle actuel pour la nuance pédagogique et le ton "humain".</div>
-            </li>
-            <li>
-              <span class="emoji-icon">🔢</span>
-              <div><strong>Vérification :</strong> Ne faites jamais confiance à une IA pour un calcul mathématique complexe sans vérifier.</div>
-            </li>
-            <li>
-              <span class="emoji-icon">🚀</span>
-              <div><strong>Scénario :</strong> Utilisez le cadre "Rôle + Mission + Contrainte" pour transformer un exercice ennuyeux en défi captivant.</div>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <footer>Généré par votre assistant IA • Formation IA & Pédagogie</footer>
+        // 4. Redirection immédiate
+        window.location.href = finalUrl;
+    </script>
+</head>
+<body>
+    <div style="text-align: center; padding-top: 50px; font-family: sans-serif;">
+        <h1>Changement d'adresse 🚚</h1>
+        <p>Cette fiche a déménagé sur La Forge.</p>
+        <p>Redirection automatique en cours...</p>
+        <p>
+            <script>
+                document.write('<a href="' + finalUrl + '">Cliquez ici si rien ne se passe</a>');
+            </script>
+        </p>
     </div>
-  </body>
+</body>
 </html>
